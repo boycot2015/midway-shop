@@ -1,9 +1,9 @@
 import { defineStore } from 'pinia';
 import request from '@/utils/request';
-export const useAppStore = defineStore('app', {
+export const useDataStore = defineStore('websitePage', {
   state: () => {
     return {
-      websiteConfig: {},
+      websitePage: {},
     };
   },
   actions: {
@@ -12,10 +12,10 @@ export const useAppStore = defineStore('app', {
             baseURL: import.meta.env.SSR
             ? `http://127.0.0.1:${process.env.MIDWAY_HTTP_PORT}`
             : '',
-            url: '/api/website/info',
+            url: '/api/website/decoration',
             method: 'get',
         });
-        this.websiteConfig = response.data;
+        this.websitePage = response.data;
     }
   }
 });

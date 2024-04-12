@@ -23,7 +23,11 @@ export class WebsiteService {
   async getWebsiteInfoData() {
     const url = this.ctx.baseApiUrl + this.prefix + '/queryWebsiteInfo';
     const result = await this.httpService.get(url, { });
-    console.log(result, 'result');
+    return { ...result.data };
+  }
+  async queryGoodsInfoBySkuList(params: any) {
+    const url = this.ctx.baseApiUrl + '/websitePc/queryGoodsInfoBySkuList';    
+    const result = await this.httpService.post(url, params.goodsSkuCodeList);
     return { ...result.data };
   }
 }

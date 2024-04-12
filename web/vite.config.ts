@@ -42,7 +42,7 @@ export default defineConfig((/* { mode, command } */) => {
       proxy: {
         '^/api/.*': {
           // 代理到本地8002端口，根据src/config/config.default.ts 中 port设置
-          target: `http://127.0.0.1:${process.env.MIDWAY_HTTP_RORT || 8002}`,
+          target: `http://127.0.0.1:${process.env.MIDWAY_HTTP_PORT || 8002}`,
           changeOrigin: true,
           rewrite: path => path.replace(/^\/api/, ''),
         },

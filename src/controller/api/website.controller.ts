@@ -1,4 +1,4 @@
-import { Inject, Controller, Get, Query } from '@midwayjs/core';
+import { Inject, Controller, Get, Post, Query, Body } from '@midwayjs/core';
 import { WebsiteService } from '../../service/website.service';
 @Controller('/api/website')
 export class APIController {
@@ -9,7 +9,7 @@ export class APIController {
     const result = await this.websiteService.queryWebsiteTheme();
     return { ...result };
   }
-  @Get('/decration')
+  @Get('/decoration')
   async getWebsiteData(@Query('pageType') pageType = 1001) {
     const result = await this.websiteService.queryWebsitePcPage({ pageType });
     return { ...result };
@@ -17,6 +17,11 @@ export class APIController {
   @Get('/info')
   async getWebsiteInfoData() {
     const result = await this.websiteService.getWebsiteInfoData();
+    return { ...result };
+  }
+  @Post('/queryGoodsInfoBySkuList')
+  async queryGoodsInfoBySkuList(@Body('goodsSkuCodeList') goodsSkuCodeList = []) {
+    const result = await this.websiteService.queryGoodsInfoBySkuList({ goodsSkuCodeList });
     return { ...result };
   }
 }

@@ -4,8 +4,8 @@ export async function queryData(params): Promise<any> {
     baseURL: import.meta.env.SSR
     ? `http://127.0.0.1:${process.env.MIDWAY_HTTP_PORT}`
     : '',
-    url: '/api/goods/getGoodsByPage',
-    method: 'get',
-    params,
+    url: '/api/website/queryGoodsInfoBySkuList',
+    method: 'post',
+    data: params,
   });
 }

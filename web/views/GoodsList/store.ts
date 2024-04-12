@@ -30,7 +30,7 @@ export const useDataStore = defineStore('goodsList', {
         }
         this.loading = false;
       } catch (error: any) {
-        console.log('error useDataStore getData', error);
+        // console.log('error useDataStore getData', error);
       }
     },
   },

@@ -1,9 +1,10 @@
 export interface GoodsList {
-  title?: string;
-  keywords?: string;
-  description?: string;
-  addtime?: string;
-  content?: string;
+    skuName?: string;
+    goodsName?: string;
+    goodsSkuCode?: string;
+    imgUrl?: string;
+    integralPrice?: string;
+    integralUnit?: string;
 }
 export interface GoodsParams {
     currentPage?:number;

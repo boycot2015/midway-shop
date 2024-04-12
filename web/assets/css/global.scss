@@ -6,6 +6,26 @@
 #nprogress .bar {
     background: var(--el-color-primary) !important;
 }
+/*对齐，浮动*/
+.tc{ text-align:center;}
+.tr{ text-align: right;}
+.tl{ text-align: left;}
+.fl{ float:left;}
+.fr{  float: right;}
+.clearfix:before,.clearfix:after{content:""; display:table;}
+.clearfix:after{clear:both;}
+.clearfix:after{visibility:hidden;display:block;font-size:0;content: " ";clear:both;height:0;}
+.clearfix{*zoom:1;}
+/*文字超出隐藏*/
+.ellipsis{overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
+.line-clamp1,
+.line-clamp2,
+.line-clamp3,
+.line-clamp4{overflow: hidden;text-overflow: ellipsis;word-break: break-all; display: -webkit-box;-webkit-box-orient: vertical;}
+.line-clamp1{-webkit-line-clamp: 1;}
+.line-clamp2{-webkit-line-clamp: 2;}
+.line-clamp3{-webkit-line-clamp: 3;}
+.line-clamp4{-webkit-line-clamp: 4;}
 .flex {
     display: flex;
 }
