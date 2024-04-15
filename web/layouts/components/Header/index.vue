@@ -11,12 +11,19 @@ let key = ref()
 <template>
     <el-row class="header w1200 flex flex-center">
         <el-col :span="6">
-            <el-image style="cursor:pointer;" @click="$router.push('/')" :src="websiteConfig.websiteLogo"></el-image>
+            <el-image class="logo" @click="$router.push('/')" :src="websiteConfig.websiteLogo"></el-image>
         </el-col>
-        <el-col :span="18">
-            <div class="text-align-left">
-                <el-input v-model="key" placeholder="输入关键词" style="width: 320px;margin-right: 16px;"></el-input>
-                <el-button type="primary" @click="$router.push({path: '/goodsList', query: { goodsName: key }})">搜索</el-button>
+        <el-col :span="12">
+            <div class="text-align-center">
+                <el-input v-model="key" placeholder="输入关键词" style="width: 100%;margin-right: 16px;">
+                <template #append>
+                    <el-button type="primary" @click="$router.push({path: '/goodsList', query: { goodsName: key }})">搜索</el-button>
+                </template>
+                </el-input>
+            </div>
+        </el-col>
+        <el-col :span="6">
+            <div class="text-align-center">
                 <el-button>购物车</el-button>
             </div>
         </el-col>
@@ -26,5 +33,9 @@ let key = ref()
 <style lang="scss" scoped>
 .header {
     margin: 16px auto;
+    .logo {
+        cursor: pointer;
+        height: 64px;
+    }
 }
 </style>

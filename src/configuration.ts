@@ -36,6 +36,7 @@ export class MainConfiguration {
     httpService.interceptors.request.use(
       config => {
         // Do something before request is sent
+        // console.log(config, 'config.data');
         if ((config.method === 'post' || config.method === 'put') && config.headers['Content-Type'] === 'application/json') {
             // post、put 提交时，将对象转换为string, 为处理Java后台解析问题
             config.data = JSON.stringify(config.data)

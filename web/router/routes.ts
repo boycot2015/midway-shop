@@ -1,5 +1,6 @@
 import { RouteRecordRaw } from 'vue-router';
 import Home from '@/views/Home/index.vue';
+import CustomPage from '@/views/CustomPage/index.vue';
 interface RouteRedirect  {
     redirect?: string
 }
@@ -26,6 +27,17 @@ const DefaultLayoutRoutes: Array<RouteRecordRaw|RouteRedirect> = [
       navActive: 'home',
     },
     component: Home,
+  },
+  {
+    path: '/customPage',
+    name: 'CustomPage',
+    meta: {
+      title: '自定义页面',
+      keywords: '自定义页面k',
+      description: '自定义页面d',
+      navActive: 'CustomPage',
+    },
+    component: CustomPage,
   },
   {
     path: '/about',

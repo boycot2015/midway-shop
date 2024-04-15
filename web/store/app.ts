@@ -5,6 +5,7 @@ export const useAppStore = defineStore('app', {
     return {
      websiteConfig: {},
      websitePage: {},
+     websiteCustomPage: {},
     };
   },
   actions: {
@@ -15,12 +16,17 @@ export const useAppStore = defineStore('app', {
         });
         this.websiteConfig = response.data;
     },
-    async getWebsiteDecoration () {
+    async getWebsiteDecoration (params:{ pageId?: string | number, pageType?: string | number } = {}) {
         let response = await request({
             url: '/api/website/decoration',
             method: 'get',
+            params
         });
-        this.websitePage = response.data;
+        if (params.pageId && params.pageType) {
+            this.websiteCustomPage = response.data;
+        } else {
+            this.websitePage = response.data;
+        }
     }
   }
 });

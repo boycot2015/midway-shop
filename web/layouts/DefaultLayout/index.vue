@@ -1,11 +1,13 @@
 <script lang="ts" >
-import { defineComponent } from 'vue'
+import { defineComponent, onMounted } from 'vue'
 import { useAppStore } from '@/store/app';
-
 export default defineComponent({
     async asyncData({store, route, router, ctx}) {
         // const query = route.query || {};
         const appStore = useAppStore();
+        if (route.path !== '/') {
+            return
+        }
         await appStore.getWebsiteConfig();
         await appStore.getWebsiteDecoration();
   },

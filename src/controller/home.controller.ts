@@ -14,6 +14,7 @@ export class HomeController {
   @Get('/detail')
   @Get('/localapi')
   @Get('/goodsList')
+  @Get('/customPage')
   @Get('/404')
   @ContentType('text/html')
   async home(): Promise<void> {
