@@ -1,10 +1,24 @@
 import { RouteRecordRaw } from 'vue-router';
 import Home from '@/views/Home/index.vue';
-
-const DefaultLayoutRoutes: Array<RouteRecordRaw> = [
+interface RouteRedirect  {
+    redirect?: string
+}
+const DefaultLayoutRoutes: Array<RouteRecordRaw|RouteRedirect> = [
   {
     path: '/',
+    name: 'Index',
+    meta: {
+      title: '首页',
+      keywords: '首页k',
+      description: '首页d',
+      navActive: 'home',
+    },
+    component: Home,
+  },
+  {
+    path: '/home',
     name: 'home',
+    redirect: '/',
     meta: {
       title: '首页',
       keywords: '首页k',
@@ -59,7 +73,6 @@ const DefaultLayoutRoutes: Array<RouteRecordRaw> = [
       title: '请求本地api样列',
       keywords: '请求本地,api样列',
       description: '请求本地midway服务api样列',
-      navActive: 'localapi',
     },
     component: () =>
       import(/* webpackChunkName: "about" */ '@/views/Localapi/index.vue'),

@@ -186,7 +186,8 @@ const errorHandler = (error: any) => {
     }
   }
 
-  return Promise.reject(error);
+//   return Promise.reject(error);
+  return Promise.resolve(error);
 };
 
 /**
@@ -283,7 +284,7 @@ export class Request {
  * @description: 生成统一公共请求
  */
 const ask = new Request({
-  baseURL: import.meta.env.VITE_APP_APIHOST || '', // url = api url + request url
+  baseURL: import.meta.env.SSR ? import.meta.env.VITE_APP_APIHOST : '', // url = api url + request url
   withCredentials: false, // 当跨域请求时发送cookie
   timeout: 0, // 请求超时时间,5000(单位毫秒) / 0 不做限制
 });

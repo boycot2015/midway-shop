@@ -1,21 +1,33 @@
-<script lang="ts" setup>
-import { computed, ref } from 'vue'
-import { useRoute, RouteMeta } from 'vue-router';
+<script lang="ts" >
+import { defineComponent } from 'vue'
 import { useAppStore } from '@/store/app';
+
+export default defineComponent({
+    async asyncData({store, route, router, ctx}) {
+        // const query = route.query || {};
+        const appStore = useAppStore();
+        await appStore.getWebsiteConfig();
+        await appStore.getWebsiteDecoration();
+  },
+  seo({store}) {
+   const dataStore = useAppStore(store);
+   return {
+      title: '首页',
+   }
+  }
+})
+</script>
+<script lang="ts" setup>
 import NavBar from '../components/NavBar/index.vue';
 import Header from '../components/Header/index.vue';
 import Footer from '../components/Footer/index.vue';
-const route = useRoute();
-const appStore = useAppStore();
-appStore.getWebsiteConfig();
-let websiteConfig = computed<any>(() => appStore.$state.websiteConfig);
-const meta = computed<RouteMeta>(()=> route.meta);
-let key = ref('')
+import NavColumn from '../components/NavColumn/index.vue';
 </script>
 <template>
     <NavBar></NavBar>
     <Header></Header>
     <div class="layout-content">
+        <NavColumn></NavColumn>
         <router-view></router-view>
     </div>
     <Footer></Footer>

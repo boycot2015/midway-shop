@@ -1,5 +1,10 @@
 :root {
     --color-primary: #42b983; 
+    --el-color-primary-dark-5: #168654; 
+    --el-color-primary-dark-2: #24af71; 
+    --el-color-primary-light-5: #9cf1cb; 
+    --el-color-primary-light-3: #6fddab; 
+    --el-color-primary: var(--color-primary);
     --color-font1: #262626; 
     --color-font2: #595959; 
     --color-font3: #8c8c8c; 
