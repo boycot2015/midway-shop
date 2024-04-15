@@ -33,6 +33,3 @@ const data = computed<any>(()=> dataStore.$state.websiteCustomPage)
     width: 100%;
 }
 </style>
-
-
-./store
