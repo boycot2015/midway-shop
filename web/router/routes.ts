@@ -4,7 +4,7 @@ import CustomPage from '@/views/CustomPage/index.vue';
 interface RouteRedirect  {
     redirect?: string
 }
-const DefaultLayoutRoutes: Array<RouteRecordRaw|RouteRedirect> = [
+const DefaultLayoutRoutes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'Index',
@@ -18,15 +18,7 @@ const DefaultLayoutRoutes: Array<RouteRecordRaw|RouteRedirect> = [
   },
   {
     path: '/home',
-    name: 'home',
-    redirect: '/',
-    meta: {
-      title: '首页',
-      keywords: '首页k',
-      description: '首页d',
-      navActive: 'home',
-    },
-    component: Home,
+    redirect: '/'
   },
   {
     path: '/customPage',
@@ -64,7 +56,11 @@ const DefaultLayoutRoutes: Array<RouteRecordRaw|RouteRedirect> = [
       navActive: 'goodsList',
     },
     component: () =>
-      import(/* webpackChunkName: "detail" */ '@/views/GoodsList/index.vue'),
+      import(/* webpackChunkName: "goodsList" */ '@/views/GoodsList/index.vue'),
+  },
+  {
+    path: '/goodsDetail/goodsDetail',
+    redirect: '/detail',
   },
   {
     path: '/detail',
@@ -87,8 +83,8 @@ const DefaultLayoutRoutes: Array<RouteRecordRaw|RouteRedirect> = [
       description: '请求本地midway服务api样列',
     },
     component: () =>
-      import(/* webpackChunkName: "about" */ '@/views/Localapi/index.vue'),
-  },
+      import(/* webpackChunkName: "localapi" */ '@/views/Localapi/index.vue'),
+  }
 ];
 
 export default DefaultLayoutRoutes;

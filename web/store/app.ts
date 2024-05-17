@@ -1,7 +1,16 @@
 import { defineStore } from 'pinia';
 import request from '@/utils/request';
+interface WebsiteProps {
+    websiteConfig: any;
+    websitePage: {
+        websitePcFixedList?: any[];
+    };
+    websiteCustomPage: {
+        websitePcFixedList?: any[];
+    };
+}
 export const useAppStore = defineStore('app', {
-  state: () => {
+  state(): WebsiteProps {
     return {
      websiteConfig: {},
      websitePage: {},
@@ -23,9 +32,9 @@ export const useAppStore = defineStore('app', {
             params
         });
         if (params.pageId && params.pageType) {
-            this.websiteCustomPage = response.data;
+            this.websiteCustomPage = response.data as WebsiteProps['websiteCustomPage'];
         } else {
-            this.websitePage = response.data;
+            this.websitePage = response.data as WebsiteProps['websiteCustomPage'];
         }
     }
   }

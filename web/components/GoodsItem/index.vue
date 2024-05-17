@@ -7,7 +7,7 @@ const props = defineProps<GoodsItemProps>();
 
 </script>
 <template>
-  <div class="goods-list-item" :class="{[props.size]:props.size, 'horizontal': props.layout==='horizontal'}" :key="props.goodsSkuCode" @click="props.goodsSkuCode && $router.push('/goodsDetail/goodsDetail?goodsSkuCode='+props.goodsSkuCode)">
+  <div class="goods-list-item" :class="{[props.size]:props.size, 'horizontal': props.layout==='horizontal'}" :key="props.goodsSkuCode" @click="props.goodsSkuCode && $router.push(`/goodsDetail/goodsDetail?goodsSkuCode=${props.goodsSkuCode}&goodsCode=${props.goodsCode}`)">
         <div class="goods-list-item-img">
             <el-image :src="props.imgUrl"></el-image>
         </div>

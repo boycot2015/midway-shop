@@ -28,21 +28,19 @@ const handleClick = (tab: TabsPaneContext, event: Event, navLinkList) => {
 <template>
     <div class="fixed-nav" v-if="route.meta && route.meta.navActive">
         <div class="fixed-nav-list w1200" v-for="item in websitePcFixedList" :key="item.columnName">
+            <el-button type="primary">
+                <el-popover width="1200px" :show-arrow="false" :offset="0" effet="dark" :teleported="false" v-if="route.name !== 'Index'">
+                 <template #reference>
+                     <span class="fixed"> 商品分类</span>
+                 </template>
+                 <Category></Category>
+                </el-popover>
+                <span class="fixed" v-else>
+                 商品分类
+                </span>
+            </el-button>
+            <Category class="fixed" v-if="route.name == 'Index'"></Category>
             <el-tabs v-model="columnName" @tab-click="handleClick">
-                <el-tab-pane label="商品分类" name="goodsList">
-                    <template #label>
-                       <el-popover width="1200px" v-if="route.name !== 'Index'">
-                        <template #reference>
-                            <span class="fixed"> 商品分类</span>
-                        </template>
-                        <Category></Category>
-                       </el-popover>
-                       <span class="fixed" v-else>
-                        商品分类
-                        <Category></Category>
-                    </span>
-                    </template>
-                </el-tab-pane>
                 <el-tab-pane label="首页" name="home"></el-tab-pane>
                 <el-tab-pane label="商品中心" name="goodsList"></el-tab-pane>
                 <el-tab-pane v-for="val in item.fixedContent.navLinkList" :label="val.columnName" :name="val.columnLink" :key="val.columnName"></el-tab-pane>
@@ -58,17 +56,23 @@ const handleClick = (tab: TabsPaneContext, event: Event, navLinkList) => {
     border-bottom: 2px solid var(--color-primary);
     &-list {
         position: relative;
+        display: flex;
+        align-items: center;
+    }
+    .el-button {
+        line-height: 40px;
+        height: 40px;
+        border-radius: 0;
+        margin-right: 20px;
+        position: relative;
     }
     :deep(.el-tabs__header) {
         margin-bottom: 0;
         .el-tabs__nav-wrap::after {
             height: 0;
         }
-        .el-tabs__item .fixed {
-            padding: 0 20px !important;
-            color: var(--color-white);
-            line-height: 40px;
-            background-color: var(--color-primary);
+        .el-tabs__active-bar {
+            display: none;
         }
     }
 }

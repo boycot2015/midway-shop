@@ -14,8 +14,10 @@ export class APIController {
   async getGoodsByPage(
     @Query('goodsName') goodsName: string,
     @Query('pageSize') pageSize: string,
+    @Query('categoryCode') categoryCode: string,
+    @Query('brandCode') brandCode: string,
     @Query('currentPage') currentPage: string) {
-    const res = await this.goodsService.getGoodsByPage({ goodsName, pageSize, currentPage });
+    const res = await this.goodsService.getGoodsByPage({ goodsName, categoryCode, brandCode, pageSize, currentPage });
     return { ...res };
   }
   @Get('/getGoodsById')

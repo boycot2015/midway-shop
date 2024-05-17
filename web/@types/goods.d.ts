@@ -1,4 +1,4 @@
-export interface GoodsList {
+export interface Goods {
     skuName?: string;
     goodsName?: string;
     goodsCode?: string;
@@ -6,9 +6,4 @@ export interface GoodsList {
     imgUrl?: string;
     integralPrice?: string;
     integralUnit?: string;
-}
-export interface GoodsParams {
-    currentPage:number;
-    goodsName?:string;
-    pageSize?:number;
 }

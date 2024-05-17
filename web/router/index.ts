@@ -22,6 +22,16 @@ export const createRouter = (type: RouterType): Router => {
         component: DefaultLayout,
         children: DefaultLayoutRoutes,
       },
+        {
+            path: '/login',
+            name: 'Login',
+            meta: {
+            title: '登录',
+            keywords: '登录k',
+            description: '登录d',
+            },
+            component: () => import(/* webpackChunkName: "login" */ '@/views/login/index.vue'),
+        },
       {
         name: 'notfound',
         path: '/:pathMatch(.*)*',

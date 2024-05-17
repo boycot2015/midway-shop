@@ -1,37 +1,43 @@
 <script lang="ts">
-import { defineComponent, computed } from 'vue'
-import { useDetailStore } from "./store";
-import { Article } from "./data.d";
+import { defineComponent, computed, ref, reactive, nextTick } from 'vue'
+import { useDetailStore } from './store';
+import { GoodsDetail, Sku, RateData } from './data.d';
+import { useRoute, useRouter } from 'vue-router';
+import { ArrowDown } from '@element-plus/icons-vue'
+
 export default defineComponent({
   async asyncData({store, route, router, ctx}) {
-    // console.log('router, ctx', router, ctx);
     const query = route.query || {};
-    const id = query.id?.toString() || '';
+    const id = query.goodsCode?.toString() || '';
     const detailStore = useDetailStore(store);
     await detailStore.getDetail(id);
+    await detailStore.getRateData({ goodsCode: id, currentPage: 1, pageSize: 20 });
   },
   seo({store}) {
    const detailStore = useDetailStore(store);
    return {
-      title: detailStore.article.title + '-详情测试',
+      title: detailStore.goodsData.goodsTitle + '-详情测试',
    }
   }
 })
 </script>
 <script lang="ts" setup>
-// 读取数据
-const detailStore = useDetailStore();
-const article = computed<Article>(()=>detailStore.$state.article)
+import SkuCom from './coms/sku.vue'
+import DescCom from './coms/desc.vue'
 </script>
 <template>
   <div class="detail">
-    <p>{{article.title}}</p>
-    <p>{{article.addtime}}</p>
-    <p>{{article.content}}</p>
+    <div class="w1200">
+        <SkuCom></SkuCom>
+        <DescCom></DescCom>
+    </div>
   </div>
 </template>
 <style lang="scss" scoped>
-
+.detail {
+    margin-top: 20px;
+    text-align: left;
+}
 </style>
 
 

@@ -17,7 +17,7 @@ export interface IAxiosRequestConfig extends AxiosRequestConfig {
  */
 export interface IResponseData<T = any> {
   code: number;
-  data?: T;
+  data: T;
   success?: boolean;
   msg?: string;
 }

@@ -5,7 +5,7 @@ export default defineComponent({
     async asyncData({store, route, router, ctx}) {
         // const query = route.query || {};
         const appStore = useAppStore();
-        if (route.path !== '/') {
+        if (appStore.websitePage.websitePcFixedList) {
             return
         }
         await appStore.getWebsiteConfig();

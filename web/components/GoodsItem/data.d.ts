@@ -4,6 +4,7 @@ export interface GoodsItemProps {
     ellipsis?: boolean;// default: false
     skuName?: string;
     goodsName?: string;
+    goodsCode?: string;
     goodsSkuCode?: string;
     imgUrl?: string;
     integralPrice?: string|number;

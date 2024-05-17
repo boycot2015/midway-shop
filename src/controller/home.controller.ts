@@ -11,7 +11,13 @@ export class HomeController {
 
   @Get('/')
   @Get('/about')
+  @Get('/cart')
+  @Get('/order')
+  @Get('/pay')
+  @Get('/order/submit')
+  @Get('/login')
   @Get('/detail')
+  @Get('/goodsDetail/goodsDetail')
   @Get('/localapi')
   @Get('/goodsList')
   @Get('/customPage')
