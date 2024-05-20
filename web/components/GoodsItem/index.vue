@@ -41,6 +41,7 @@ const props = defineProps<GoodsItemProps>();
     margin-right: 16px;
     margin-bottom: 16px;
     border: 1px solid var(--color-border);
+    background-color: var(--color-white);
     cursor: pointer;
     &:nth-child(5n) {
         margin-right: 0;

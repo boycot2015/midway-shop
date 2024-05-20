@@ -242,7 +242,9 @@ export class Request {
 
         const res = response.data;
         const { code, success } = res;
-
+        if (code + '' === '11111') {
+            window.location.href = userLoginUrl;
+        }
         // 自定义状态码验证
         if (code !== ResultCodeEnum.SUCCESS&&code !== ResultCodeEnum.SUCCESS_CODE&&!success) {
           return Promise.reject({

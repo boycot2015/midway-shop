@@ -2,8 +2,10 @@
 import { computed, ref } from 'vue'
 import { useRoute, RouteMeta } from 'vue-router';
 import { useAppStore } from '@/store/app';
+import { useUserStore } from '@/store/user';
 const route = useRoute();
 const appStore = useAppStore();
+const userStore = useUserStore();
 appStore.getWebsiteConfig();
 let websiteConfig = computed<any>(() => appStore.$state.websiteConfig);
 const meta = computed<RouteMeta>(()=> route.meta);
@@ -16,9 +18,10 @@ let key = ref('')
             <el-col :span="12">
                 <nav>
                     <router-link to="/" :class="{'active': meta.navActive === 'home'}">首页</router-link><el-divider direction="vertical" />
-                    <router-link to="/login" :class="{'active': meta.navActive === 'login'}">登录</router-link><el-divider direction="vertical" />
+                    <router-link to="/login" v-if="!userStore.token" :class="{'active': meta.navActive === 'login'}">登录</router-link>
+                    <router-link to="/userCenter" v-else :class="{'active': meta.navActive === 'userCenter'}">{{userStore.userInfo.nickName }}</router-link><el-divider direction="vertical" />
                     <router-link to="/goodsList" :class="{'active': meta.navActive === 'goodsList'}">商品中心</router-link><el-divider direction="vertical" />
-                    <router-link :to="{path:'/localapi', query: {'uid':10}}" :class="{'active': meta.navActive === 'localapi'}">个人中心</router-link>
+                    <!-- <router-link :to="{path:'/localapi', query: {'uid':10}}" :class="{'active': meta.navActive === 'localapi'}">个人中心</router-link> -->
                 </nav>
             </el-col>
         </el-row>

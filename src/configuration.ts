@@ -41,6 +41,9 @@ export class MainConfiguration {
             // post、put 提交时，将对象转换为string, 为处理Java后台解析问题
             config.data = JSON.stringify(config.data)
         }
+        if (config.params?.Authorization || config.data?.Authorization) {
+            config.headers['Authorization'] = config.params?.Authorization || config.data?.Authorization || undefined;
+        }
         return config;
       },
       error => {
@@ -57,7 +60,7 @@ export class MainConfiguration {
           // Do something with response error
           return Promise.reject(error);
         }
-      );
+    );
     // 拓展context,集成baseApiUrl
     Object.defineProperties(this.app.context, {
         baseApiUrl: {

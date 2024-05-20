@@ -29,4 +29,4 @@ export const ajaxResponseNoVerifyUrl: string[] = [
 /**
  * @description: 平台用户登录的界面Url地址
  */
-export const userLoginUrl = '/user/login';
+export const userLoginUrl = '/login';

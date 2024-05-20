@@ -24,12 +24,15 @@ import NavBar from '../components/NavBar/index.vue';
 import Header from '../components/Header/index.vue';
 import Footer from '../components/Footer/index.vue';
 import NavColumn from '../components/NavColumn/index.vue';
+import Breadcrumb from '../components/Breadcrumb/index.vue';
+
 </script>
 <template>
     <NavBar></NavBar>
     <Header></Header>
     <div class="layout-content">
         <NavColumn></NavColumn>
+        <Breadcrumb v-if="!$route.meta.hideBreadcrumb"></Breadcrumb>
         <router-view></router-view>
     </div>
     <Footer></Footer>
@@ -43,8 +46,11 @@ import NavColumn from '../components/NavColumn/index.vue';
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  background-color: var(--color-bg);
 }
 .layout-content {
     min-height: calc(100vh - 182px);
+    background-color: var(--color-bg);
+    min-width: 1200px;
 }
 </style>

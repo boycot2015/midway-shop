@@ -10,12 +10,12 @@ export class APIController {
 
   @Get('/*')
   async getApiData(@Query() params:any) {
-    const result = await this.httpService.get(this.ctx.baseApiUrl + this.ctx.url.replace('api', ''), { params });
+    const result = await this.httpService.get(this.ctx.baseApiUrl + this.ctx.url.replace('api', ''), { params: { Authorization: this.ctx.headers.authorization, ...params } });
     return { ...result.data };
   }
   @Post('/*')
   async getApiPostData(@Body() params:any) {
-    const result = await this.httpService.post(this.ctx.baseApiUrl + this.ctx.url.replace('api', ''), params);
+    const result = await this.httpService.post(this.ctx.baseApiUrl + this.ctx.url.replace('api', ''), { Authorization: this.ctx.headers.authorization, ...params });
     return { ...result.data };
   }
 }

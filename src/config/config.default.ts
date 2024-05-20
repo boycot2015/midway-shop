@@ -42,7 +42,7 @@ export default {
         // `headers` are custom headers to be sent
         headers: {
           'X-Requested-With': 'XMLHttpRequest',
-          'Website-Path': 'cs0188' // cs0188 DELL
+          'Website-Path': 'DELL' // cs0188 DELL
         },
         timeout: 5000, // default is `0` (no timeout)
 

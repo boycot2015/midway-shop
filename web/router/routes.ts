@@ -1,15 +1,16 @@
 import { RouteRecordRaw } from 'vue-router';
 import Home from '@/views/Home/index.vue';
 import CustomPage from '@/views/CustomPage/index.vue';
-interface RouteRedirect  {
-    redirect?: string
-}
+import UserCenter from './modules/user';
+
 const DefaultLayoutRoutes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'Index',
     meta: {
       title: '首页',
+      hideBreadcrumb: true,
+      openVisit: true,
       keywords: '首页k',
       description: '首页d',
       navActive: 'home',
@@ -67,6 +68,7 @@ const DefaultLayoutRoutes: Array<RouteRecordRaw> = [
     name: 'detail',
     meta: {
       title: '详情',
+      hideBreadcrumb: true,
       keywords: '详情k',
       description: '详情d',
       navActive: 'about',
@@ -84,7 +86,12 @@ const DefaultLayoutRoutes: Array<RouteRecordRaw> = [
     },
     component: () =>
       import(/* webpackChunkName: "localapi" */ '@/views/Localapi/index.vue'),
-  }
+  },
+  UserCenter,
+  {
+    path: '/userCenter',
+    redirect: '/user/index'
+  },
 ];
 
 export default DefaultLayoutRoutes;

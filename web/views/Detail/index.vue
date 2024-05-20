@@ -35,8 +35,9 @@ import DescCom from './coms/desc.vue'
 </template>
 <style lang="scss" scoped>
 .detail {
-    margin-top: 20px;
+    padding-top: 20px;
     text-align: left;
+    background-color: var(--color-white);
 }
 </style>
 

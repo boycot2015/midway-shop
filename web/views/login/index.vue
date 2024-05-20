@@ -1,6 +1,6 @@
 <template>
     <div class="login-box tc flex flex-column flex-center flex-justify-center">
-        <div class="logo">
+        <div class="logo" @click="$router.push('/')">
             <el-image :src="websiteConfig.websiteLogo"></el-image>
         </div>
         <div class="login-box-body">
@@ -31,12 +31,11 @@
 </template>
 <script lang="ts">
 import { computed, defineComponent, ref, watch } from 'vue'
-import { useRoute } from 'vue-router';
+import { useRouter } from 'vue-router';
 import { useUserStore } from '@/store/user';
 import { useAppStore } from '@/store/app';
 import { User, Lock } from '@element-plus/icons-vue';
 
-const route = useRoute();
 const userStore = useUserStore();
 const appStore = useAppStore();
 appStore.getWebsiteConfig();
@@ -52,14 +51,20 @@ export default defineComponent({
 })
 </script>
 <script lang="ts" setup>
+
+import { encryptByAES } from '@/utils/crypto';
 import request from '@/utils/request';
+
+const router = useRouter();
 function login(params: any): Promise<any> {
   return request({
     url: '/api/login/account/pwd',
     method: 'post',
     data: {
         clientType: 1001,
-        ...params
+        ...params,
+        userName: encryptByAES(formData.value.userName),
+        password: encryptByAES(formData.value.password)
     },
   });
 }
@@ -73,6 +78,7 @@ const onSubmit = () => {
     login(formData.value).then((res: any) => {
         if (res && res.success) {
             userStore.setUserInfo(res.data);
+            router.push(router.currentRoute.value.query.redirect || '/' as any);
         } else {
             userStore.setUserInfo({ loading: false });
         }
@@ -91,6 +97,7 @@ const onSubmit = () => {
         left: 20px;
         top: 20px;
         height: 80px;
+        cursor: pointer;
         img {
             height: 100%;
         }

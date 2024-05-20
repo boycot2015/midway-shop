@@ -20,6 +20,7 @@ export class HomeController {
   @Get('/goodsDetail/goodsDetail')
   @Get('/localapi')
   @Get('/goodsList')
+  @Get('/userCenter/*')
   @Get('/customPage')
   @Get('/404')
   @ContentType('text/html')
