@@ -2,8 +2,18 @@
 import { computed, ref, watch } from 'vue'
 import { useRoute } from 'vue-router';
 import { useAppStore } from '@/store/app';
+import { useCartStore } from '@/store/cart';
+import { ShoppingCart } from '@element-plus/icons-vue';
+defineOptions({
+    name: 'Header',
+    components: {
+        ShoppingCart,
+    }
+})
 const route = useRoute();
 const appStore = useAppStore();
+const cartStore = useCartStore();
+
 appStore.getWebsiteConfig();
 let websiteConfig = computed<any>(() => appStore.$state.websiteConfig || {});
 let key = ref(route.query.goodsName || '');
@@ -27,8 +37,9 @@ watch(route, (val) => {
                 </div>
             </el-col>
             <el-col :span="6">
-                <div class="text-align-center">
-                    <el-button size="large" type="primary">购物车</el-button>
+                <div class="text-align-center shopping-cart">
+                    <el-badge :value="cartStore.totalCount" :hidden="!cartStore.totalCount"><el-button size="large" type="primary"><el-icon><ShoppingCart /></el-icon>购物车</el-button></el-badge>
+                    
                 </div>
             </el-col>
         </el-row>
@@ -43,6 +54,9 @@ watch(route, (val) => {
     .logo {
         cursor: pointer;
         height: 64px;
+    }
+    .shopping-cart .el-icon {
+        margin-right: 10px;
     }
 }
 </style>

@@ -5,10 +5,10 @@ import {
   Router,
 } from 'vue-router';
 import NProgress from 'nprogress'; // progress bar
-
+import 'nprogress/nprogress.css';
 import DefaultLayoutRoutes from '@/router/routes';
 import DefaultLayout from '@/layouts/DefaultLayout/index.vue';
-import { useUserStore } from '@/store/user';
+// import { useUserStore } from '@/store/user';
 export const createRouter = (type: RouterType): Router => {
   const router = _createRouter({
     scrollBehavior(/* to, from, savedPosition */) {
@@ -44,21 +44,23 @@ export const createRouter = (type: RouterType): Router => {
     ],
   });
 
-  router.beforeEach((to, from, next) => {
+  router.beforeEach((/** to, from, next */) => {
     if (!import.meta.env.SSR) {
         // start progress bar
         NProgress.start();
-    }
-    // console.log(to.path, from.path, 'to, from');
-    const userStore = useUserStore();
-    if (!userStore.token && to.path !== '/login') {
-        if (to.path !== '/login' && !to.meta.openVisit) {
-            next('/login');
-        } else {
-            next();
-        }
+        // console.log(to.path, from.path, 'to, from');
+        // const userStore = useUserStore();
+        // if (!userStore.token && to.path !== '/login') {
+        //     if (to.path !== '/login' && !to.meta.openVisit) {
+        //         next('/login');
+        //     } else {
+        //         next();
+        //     }
+        // } else {
+        //     next();
+        // }
     } else {
-        next();
+        // next();
     }
   });
 

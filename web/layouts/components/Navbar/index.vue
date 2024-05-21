@@ -1,25 +1,49 @@
 <script lang="ts" setup>
-import { computed, ref } from 'vue'
-import { useRoute, RouteMeta } from 'vue-router';
+import { computed, onMounted, ref } from 'vue'
+import { useRoute, useRouter, RouteMeta } from 'vue-router';
 import { useAppStore } from '@/store/app';
 import { useUserStore } from '@/store/user';
+import { ArrowDown } from '@element-plus/icons-vue';
 const route = useRoute();
+const router = useRouter();
 const appStore = useAppStore();
 const userStore = useUserStore();
 appStore.getWebsiteConfig();
-let websiteConfig = computed<any>(() => appStore.$state.websiteConfig);
 const meta = computed<RouteMeta>(()=> route.meta);
-let key = ref('')
+const token = computed<any>(()=> userStore.token);
+const userInfo = computed<any>(()=> userStore.userInfo);
+const isMounted = ref(false);
+onMounted(() =>{
+    isMounted.value = true;
+})
 </script>
 <template>
-    <div class="nav-bar">
+    <div class="nav-bar" v-if="isMounted">
         <el-row class="w1200">
             <el-col :span="12"></el-col>
             <el-col :span="12">
                 <nav>
                     <router-link to="/" :class="{'active': meta.navActive === 'home'}">首页</router-link><el-divider direction="vertical" />
-                    <router-link to="/login" v-if="!userStore.token" :class="{'active': meta.navActive === 'login'}">登录</router-link>
-                    <router-link to="/userCenter" v-else :class="{'active': meta.navActive === 'userCenter'}">{{userStore.userInfo.nickName }}</router-link><el-divider direction="vertical" />
+                    <span v-if="token">
+                        <el-dropdown @command="(val) => {
+                            userStore[val]();
+                            router.push('/login');
+                        }" trigger="hover" style="line-height: 32px;">
+                            <router-link  to="/userCenter" :class="{'active': meta.navActive === 'userCenter'}" class="el-dropdown-link">
+                                {{userInfo.nickName }}
+                                <el-icon class="el-icon--right">
+                                    <arrow-down />
+                                </el-icon>
+                            </router-link>
+                            <template #dropdown>
+                                <el-dropdown-menu>
+                                    <el-dropdown-item command="logout">退出登录</el-dropdown-item>
+                                </el-dropdown-menu>
+                            </template>
+                        </el-dropdown>
+                    </span>
+                    <router-link to="/login" v-else :class="{'active': meta.navActive === 'login'}">登录</router-link>
+                    <el-divider direction="vertical" />
                     <router-link to="/goodsList" :class="{'active': meta.navActive === 'goodsList'}">商品中心</router-link><el-divider direction="vertical" />
                     <!-- <router-link :to="{path:'/localapi', query: {'uid':10}}" :class="{'active': meta.navActive === 'localapi'}">个人中心</router-link> -->
                 </nav>

@@ -25,6 +25,8 @@ import {
   IAxiosRequestConfig,
 } from '@/@types/utils.request';
 
+import { useUserStore } from '@/store/user';
+
 /* ================ 自定义请求消除器 相关 S ======================= */
 /**
  * @description: 声明一个 Map 用于存储每个请求的标识 和 取消函数
@@ -218,13 +220,15 @@ export class Request {
         requestCanceler.addPending(axiosConfig);
 
         // 自定义添加token header
-        const headerToken = getToken();
+        const userStore = useUserStore();
+        const headerToken = getToken() || userStore.token;
         if (headerToken) {
           // axios 已经运行起来了，所以 headers 现在已经是 AxiosHeaders 类型了，所以不能当做json类型
           if (typeof axiosConfig.headers?.set === 'function') {
             axiosConfig.headers?.set(ajaxHeadersTokenKey, headerToken);
+          } else {
+            axiosConfig.headers[ajaxHeadersTokenKey] = headerToken;
           }
-          // axiosConfig.headers[ajaxHeadersTokenKey] = headerToken;
         }
 
         return axiosConfig;
@@ -242,7 +246,7 @@ export class Request {
 
         const res = response.data;
         const { code, success } = res;
-        if (code + '' === '11111') {
+        if (code + '' === '11111' && !import.meta.env.SSR) {
             window.location.href = userLoginUrl;
         }
         // 自定义状态码验证

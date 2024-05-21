@@ -6,20 +6,18 @@
         class="el-menu-vertical"
       >
         <template v-for="item in menu">
-            <el-menu-item-group :index="item.path" :key="item.path" :title="item.meta.title" v-if="item.children && item.children.length && !item.meta.hideChildren">
-            <el-menu-item :index="child.path" :key="child.path" v-show="!child.meta.hideInMenu" v-for="child in item.children" >
-                <el-icon><component :is="child.meta.icon" /></el-icon>
-                {{child.meta.title}}
+            <el-menu-item-group :index="item.path" :key="item.path" :title="item.meta?.title" v-if="item.children && item.children.length && !item.meta?.hideChildren">
+            <el-menu-item :index="child.path" :key="child.path" v-show="!child.meta?.hideInMenu" v-for="child in item.children" >
+                <el-icon><component :is="child.meta?.icon" /></el-icon>
+                {{child.meta?.title}}
             </el-menu-item>
             </el-menu-item-group>
         </template>
       </el-menu>
-        <!-- <client-only>
-        </client-only> -->
     </div>
 </template>
-<script setup>
-import UserCenter from '@/router/modules/user.ts';
+<script lang="ts" setup>
+import UserCenter from '@/router/modules/user';
 import { defineOptions } from 'vue';
 import { useRoute } from 'vue-router';
 import { User, List, Tools, Setting } from '@element-plus/icons-vue';

@@ -1,7 +1,8 @@
 <script lang="ts">
 import { defineComponent, computed, ref, reactive, nextTick } from 'vue'
 import { useDetailStore } from '@/views/Detail/store';
-import { GoodsDetail, Sku } from '@/views/Detail/data.d';
+import { GoodsDetail } from '@/views/Detail/data.d';
+import { Sku } from '@/@types/goods.d';
 import { useRoute, useRouter } from 'vue-router';
 import { ArrowDown } from '@element-plus/icons-vue'
 import { useAppStore } from '@/store/app';
@@ -24,7 +25,7 @@ const region = ref({
     countyId: ''
 })
 let currentSku = ref(detailStore.goodsData.goodsSkuList?.find(item => item.goodsSkuCode === route.query.goodsSkuCode) as Sku);
-console.log('router, ctx', detailStore.goodsData, goodsData.value, currentSku);
+// console.log('router, ctx', detailStore.goodsData, goodsData.value, currentSku);
 const onChangeCarousel = (item, index) => {
     carouselRef.value.setActiveItem(index);
 }
@@ -49,7 +50,7 @@ const onChangeSku = (current, index) => {
               :interval="5000"
               arrow="always"
               height="500px"
-              v-if="currentSku.goodsSkuImage"
+              v-if="currentSku?.goodsSkuImage"
               @change="val => currentIndicator = val"
               >
                   <el-carousel-item v-for="item in currentSku.goodsSkuImage" :key="item.imgName">
@@ -94,7 +95,7 @@ const onChangeSku = (current, index) => {
                       </el-form-item>
                       <el-form-item label="服务">{{ goodsData.returnGoodsRulesName }}</el-form-item>
                   </div>
-                  <el-form-item label="颜色：" v-for="(goodsSpec, index) in goodsData.goodsSpecList" :key="goodsSpec.specId">
+                  <el-form-item :label="goodsSpec.specName" v-for="(goodsSpec, index) in goodsData.goodsSpecList" :key="goodsSpec.specId">
                       <el-button class="color-item fl" :type="currentSku.goodsSkuSpec.find(val => goodsSpec.specId === val.specNameCode)?.specValueCode === spec.valueId ? 'primary':''" v-for="(spec, index) in goodsSpec.values" :key="spec.valueId" @click="onChangeSku(spec, index)">
                           {{ spec.valueName }}
                   </el-button>
@@ -107,7 +108,7 @@ const onChangeSku = (current, index) => {
                           <el-button size="large">加入购物车</el-button>
                           <el-button size="large" type="primary">立即购买</el-button>
                           <el-button class="star" size="large">
-                              <el-rate v-model="currentSku.isQuotaGoods" :max="1"></el-rate>
+                              <el-rate v-model="currentSku.minimumOrderQuantity" :max="1"></el-rate>
                               收藏
                           </el-button>
                       </div>

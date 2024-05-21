@@ -1,6 +1,7 @@
 import { isPromise } from '@/utils/is';
 import { siteTitle } from '@/config/settings';
 import { createApp } from './main';
+import { useUserStore } from '@/store/user';
 
 const { app, router, pinia } = createApp('web');
 
@@ -16,7 +17,14 @@ router.beforeResolve((to, from, next) => {
   if (from && !from.name) {
     return next();
   }
-
+  const userStore = useUserStore();
+  if (!userStore.token && to.path !== '/login') {
+      if (to.path !== '/login' && !to.meta.openVisit) {
+        return next('/login');
+      } else {
+        return next();
+      }
+  }
   const matched = router.resolve(to).matched;
   const prevMatched = router.resolve(from).matched;
 
@@ -94,7 +102,7 @@ router.beforeResolve((to, from, next) => {
   } catch (err) {
     // seo 赋值
     setSeo();
-    next(err as any);
+    next();
   }
 });
 

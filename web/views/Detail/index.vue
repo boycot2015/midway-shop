@@ -1,10 +1,12 @@
 <script lang="ts">
 import { defineComponent, computed, ref, reactive, nextTick } from 'vue'
 import { useDetailStore } from './store';
-import { GoodsDetail, Sku, RateData } from './data.d';
+// import { GoodsDetail, RateData } from './data.d';
 import { useRoute, useRouter } from 'vue-router';
-import { ArrowDown } from '@element-plus/icons-vue'
+// import { ArrowDown } from '@element-plus/icons-vue'
+import { Sku } from '@/@types/goods.d';
 
+// const detailStore = useDetailStore();
 export default defineComponent({
   async asyncData({store, route, router, ctx}) {
     const query = route.query || {};
@@ -13,10 +15,11 @@ export default defineComponent({
     await detailStore.getDetail(id);
     await detailStore.getRateData({ goodsCode: id, currentPage: 1, pageSize: 20 });
   },
-  seo({store}) {
-   const detailStore = useDetailStore(store);
+  seo({ store, route }) {
+    const detailStore = useDetailStore(store);
+    let currentSku = ref(detailStore.goodsData.goodsSkuList?.find(item => item.goodsSkuCode === route.query.goodsSkuCode) as Sku);
    return {
-      title: detailStore.goodsData.goodsTitle + '-详情测试',
+      title: currentSku.value?.goodsSkuName + '-详情测试',
    }
   }
 })

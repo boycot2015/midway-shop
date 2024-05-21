@@ -1,15 +1,17 @@
 <script lang="ts" >
 import { defineComponent, onMounted } from 'vue'
 import { useAppStore } from '@/store/app';
+import { useCartStore } from '@/store/cart';
 export default defineComponent({
     async asyncData({store, route, router, ctx}) {
         // const query = route.query || {};
         const appStore = useAppStore();
+        const cartStore = useCartStore();
+        await cartStore.getCartData();
         if (appStore.websitePage.websitePcFixedList) {
             return
         }
         await appStore.getWebsiteConfig();
-        await appStore.getWebsiteDecoration();
   },
   seo({store}) {
    const dataStore = useAppStore(store);

@@ -42,6 +42,18 @@ type  UserInfo = {
         "token": ""
     },
     "website": WebsiteProps['websiteConfig']
+    cardBackgroundValue: string
+    completeOrderCount: string | number
+    afterOrderCount: string | number
+    totalIntegralAmount: string | number
+    integralPermanentAmount: string | number
+    overdue30IntegralAmount: string | number
+    waitAuditCount: string | number
+    waitCommentCount: string | number
+    waitDeliveryCount: string | number
+    waitPayCount: string | number
+    waitSubmitCount: string | number
+    waitTakeCount: string | number
 }
 export const useUserStore = defineStore('user', {
   state: () => {

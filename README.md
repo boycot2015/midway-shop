@@ -1,5 +1,6 @@
-# midway-vue3-ssr
+# midway-shop
 
+基于 Midway、Vue 3 组装的 SSR 框架，简单、易学易用、方便扩展、集成Midway框架，Vue SSR 框架。
 
 ## 使用文档
 

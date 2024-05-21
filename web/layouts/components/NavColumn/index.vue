@@ -8,8 +8,8 @@ const appStore = useAppStore();
 const router = useRouter();
 const route = useRoute();
 
-const data = computed<any>(()=> appStore.$state.websitePage)
-const columnName = ref(route.name === 'Index' ? '/home': route.name);
+const data = computed<any>(() => appStore.$state.websitePage)
+const columnName:any = ref(route.name === 'Index' ? '/home': route.path);
 const websitePcFixedList = data.value?.websitePcFixedList?.map(el => {
     el.fixedContent = el.fixedContent && typeof el.fixedContent === 'string' ? JSON.parse(el.fixedContent) : el.fixedContent
     el.columnName = '/home'

@@ -49,14 +49,17 @@ export default defineConfig((/* { mode, command } */) => {
       },
     },
     plugins,
-    // css: {
-    //     preprocessorOptions: {
-    //         scss: {
-    //             additionalData: '@import "@/assets/css/global.scss";',
-    //             javascriptEnabled: true
-    //         }
-    //     }
-    // },
+    css: {
+        preprocessorOptions: {
+            scss: {
+                additionalData: '@import "@/assets/css/global.scss";',
+                javascriptEnabled: true
+            }
+        }
+    },
+    define: {
+        __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: true,
+    },
   };
 
   /* 不同端配置 S */

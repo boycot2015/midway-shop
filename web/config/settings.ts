@@ -6,7 +6,7 @@
 /**
  * @description: 站点名称
  */
-export const siteTitle = '云中鹤商城';
+export const siteTitle = 'B2C商城';
 
 /**
  * @description: 站点本地存储Token 的 Key值

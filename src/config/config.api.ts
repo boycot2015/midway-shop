@@ -1,3 +1,3 @@
 export default {
-    baseUrl: 'https://gatewaytest.haoxiny.com/portal/mall', // show / test
+    baseUrl: 'https://gatewayshow.haoxiny.com/portal/mall', // gatewayshow / gatewaytest
 }
