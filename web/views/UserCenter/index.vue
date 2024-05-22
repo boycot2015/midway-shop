@@ -1,6 +1,6 @@
 <template>
     <div class="w1200">
-        <el-row class="user-main" :gutter="30">
+        <el-row class="user-main" :gutter="20">
             <el-col :span="4" class="user-main-left">
                 <Aside></Aside>
             </el-col>

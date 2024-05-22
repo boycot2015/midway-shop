@@ -132,10 +132,13 @@ export interface OrderList {
     package: Package;
     orderGoods:OrderGoods,
     spanIndex: number | string
-    totalRows: number | string
+    topSpanIndex: number | string
+    topRows: number | string
+    childRows: number | string
 }
 export interface OrderParams {
     totalPage?:number;
+    currentPage?:number;
     displayOrderStatus?:string|number|LocationQueryValue[];
     search?:string;
     sort?:string;

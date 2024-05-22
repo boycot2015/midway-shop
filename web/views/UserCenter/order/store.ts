@@ -20,39 +20,52 @@ export const useDataStore = defineStore('orderList', {
     return {
       loading: false,
       params: {
+        search: undefined,
         displayOrderStatus: '0',
       } as OrderParams,
       pageData: {
         currentPage: 1,
-        pageSize: 20,
+        pageSize: 10,
         totalPage: 0
       },
       list: [],
     };
   },
   actions: {
-    setPageData (val, prop) {
-        this.pageData[prop] = val;
-        this.getData();
+    setParams (val:any = {}) {
+        for (const key in val) {
+            if (Object.prototype.hasOwnProperty.call(this.params, key)) {
+                this.params[key] = val[key]
+            }
+            if (Object.prototype.hasOwnProperty.call(this.pageData, key)) {
+                this.pageData[key] = val[key]
+            }
+        }
+        this.getData(val)
     },
-    async getData(params?: Pagination | OrderParams) {
+    async getData(params: any = {}) {
       try {
-          this.list = [];
           this.loading = true;
           const response: IResponseData<{ records?: OrderList[], page: Pagination }> = await queryData({ ...this.params, ...this.pageData, ...params });
+          this.list = [];
           let temp = response.data?.records || [];
           temp.map(({orderPackageEntriesVOList, orderEntriesVOList, ...el }) => {
             if (orderPackageEntriesVOList && orderPackageEntriesVOList.length) {
+                let spanIndex = 0;
+                let totalRows = orderPackageEntriesVOList.reduce((total, item) => total + (item.orderEntriesVOList?.length || 0), 0);
                 orderPackageEntriesVOList.map(packageItem => {
                     if (packageItem.orderEntriesVOList && packageItem.orderEntriesVOList.length) {
                         packageItem.orderEntriesVOList.map((orderGoods, index) => {
                             this.list.push({
                                 ...el,
                                 spanIndex: index,
-                                totalRows: packageItem.orderEntriesVOList.length,
+                                topSpanIndex: spanIndex,
+                                topRows: totalRows,
+                                childRows: packageItem.orderEntriesVOList.length,
                                 package: packageItem,
                                 orderGoods,
                             })
+                            spanIndex++
                         })
                     }
                 })
@@ -61,8 +74,10 @@ export const useDataStore = defineStore('orderList', {
                     orderEntriesVOList.map((orderGoods, index) => {
                         this.list.push({
                             ...el,
+                            topSpanIndex: index,
+                            topRows: orderEntriesVOList.length,
                             spanIndex: index,
-                            totalRows: orderEntriesVOList.length,
+                            childRows: orderEntriesVOList.length,
                             orderGoods,
                         })
                     })
@@ -72,7 +87,7 @@ export const useDataStore = defineStore('orderList', {
           
         this.pageData = {
             ...this.pageData,
-            totalRow: response.data?.page?.totalPage || 0,
+            totalRow: response.data?.page?.totalRow || 0,
             totalPage: response.data?.page?.totalPage || 0
         };
         this.loading = false;
