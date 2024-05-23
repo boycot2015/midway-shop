@@ -1,20 +1,19 @@
-<script lang="ts" >
+<script lang="ts">
 import { defineComponent, onMounted } from 'vue'
 import { useAppStore } from '@/store/app';
+import { useUserStore } from '@/store/user';
 import { useCartStore } from '@/store/cart';
 export default defineComponent({
     async asyncData({store, route, router, ctx}) {
         // const query = route.query || {};
         const appStore = useAppStore();
-        const cartStore = useCartStore();
-        await cartStore.getCartData();
         if (appStore.websitePage.websitePcFixedList) {
             return
         }
         await appStore.getWebsiteConfig();
   },
   seo({store}) {
-   const dataStore = useAppStore(store);
+//    const dataStore = useAppStore(store);
    return {
       title: '首页',
    }
@@ -27,7 +26,13 @@ import Header from '../components/Header/index.vue';
 import Footer from '../components/Footer/index.vue';
 import NavColumn from '../components/NavColumn/index.vue';
 import Breadcrumb from '../components/Breadcrumb/index.vue';
-
+const cartStore = useCartStore();
+const userStore = useUserStore();
+onMounted(async () => {
+    if (userStore.token) {
+        await cartStore.getCartCount();
+    }
+})
 </script>
 <template>
     <NavBar></NavBar>

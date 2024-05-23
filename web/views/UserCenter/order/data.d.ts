@@ -140,6 +140,6 @@ export interface OrderParams {
     totalPage?:number;
     currentPage?:number;
     displayOrderStatus?:string|number|LocationQueryValue[];
-    search?:string;
+    search?:string|null;
     sort?:string;
 }

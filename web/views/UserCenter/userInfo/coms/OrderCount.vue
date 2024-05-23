@@ -47,7 +47,7 @@ const userStore = useUserStore();
 const appStore = useAppStore();
 const userInfo = computed(() => userStore.userInfo);
 const list = ref([
-    {title: '全部订单', prop: '', icon: 'List'},
+    {title: '全部订单', prop: '', icon: 'List', orderStatus: '0'},
     {title: '待支付', prop: 'waitPayCount', icon: 'Wallet', orderStatus: '1001'},
     {title: '待发货', prop: 'waitDeliveryCount', icon: 'Box', orderStatus: '1002'},
     {title: '已发货', prop: 'waitTakeCount', icon: 'Van', orderStatus: '1003'},

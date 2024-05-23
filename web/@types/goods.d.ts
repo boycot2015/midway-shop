@@ -19,12 +19,12 @@ export type GoodsSkuImage = {
 export type GoodsSkuSpec = {
     "goodsSkuCode": "2888888889071426",
     "id": 26000712042,
-    "specName": "颜色",
-    "specNameCode": "0",
-    "specNameSort": 0,
-    "specValue": "咖喱色",
-    "specValueCode": "2888888888888889",
-    "specValueSort": 0
+    "specName"?: "颜色",
+    "specNameCode"?: "0",
+    "specNameSort"?: 0,
+    "specValue"?: "咖喱色",
+    "specValueCode"?: "2888888888888889",
+    "specValueSort"?: 0
 }
 type goodsSpec = {
     "nameSort": 0,
@@ -57,6 +57,8 @@ export interface Sku {
     "goodsImages": [],
     "goodsSkuCode": "2888888889071426",
     "goodsSkuImage": GoodsSkuImage[],
+    goodsSkuImgUrl?: string,
+    quantity: number,
     "goodsSkuLabel": [],
     "goodsSkuName": "系统自有商品lzx0011 咖喱色",
     "goodsSkuSalesArea": [],

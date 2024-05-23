@@ -57,10 +57,14 @@
                 {{displayOrderStatus[row.displayOrderStatus]}}
             </template>
             <template #operate="{row}">
-                <el-link>确认收货</el-link>
-                <el-link>查看物流</el-link>
-                <el-link>取消订单</el-link>
-                <el-link type="danger">删除订单</el-link>
+                 <template v-if="row.displayOrderStatus===1003||row.displayOrderStatus===2010">
+                    <el-link>确认收货</el-link>
+                    <el-link>查看物流</el-link>
+                 </template>
+                <el-link v-if="row.displayOrderStatus===1001">取消订单</el-link>
+                <el-link type="danger" v-if="row.displayOrderStatus===1005">删除订单</el-link>
+                <el-link v-if="row.displayOrderStatus===1004||row.displayOrderStatus===1005">再来一单</el-link>
+                <el-link>查看详情</el-link>
             </template>
         </Table>
     </div>

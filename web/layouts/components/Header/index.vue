@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { computed, ref, watch } from 'vue'
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { useAppStore } from '@/store/app';
 import { useCartStore } from '@/store/cart';
 import { ShoppingCart } from '@element-plus/icons-vue';
@@ -11,6 +11,7 @@ defineOptions({
     }
 })
 const route = useRoute();
+const router = useRouter();
 const appStore = useAppStore();
 const cartStore = useCartStore();
 
@@ -38,8 +39,7 @@ watch(route, (val) => {
             </el-col>
             <el-col :span="6">
                 <div class="text-align-center shopping-cart">
-                    <el-badge :value="cartStore.totalCount" :hidden="!cartStore.totalCount"><el-button size="large" type="primary"><el-icon><ShoppingCart /></el-icon>购物车</el-button></el-badge>
-                    
+                    <el-badge :value="cartStore.totalCount" :hidden="!cartStore.totalCount"><el-button size="large" type="primary" @click="router.push('/cart')"><el-icon><ShoppingCart /></el-icon>购物车</el-button></el-badge>
                 </div>
             </el-col>
         </el-row>

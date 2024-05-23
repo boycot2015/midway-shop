@@ -1,8 +1,10 @@
 <script lang="ts">
 import { defineComponent, computed, watch } from 'vue'
 import { useDataStore } from "./store";
-import { GoodsList, GoodsParams } from "./data.d";
+import { useCartStore } from "@/store/cart";
+import { GoodsParams } from "./data.d";
 import GoodsItem from '@/components/GoodsItem/index.vue';
+import { ShoppingCart } from '@element-plus/icons-vue';
 export default defineComponent({
   async asyncData({store, route, router, ctx}) {
     const query = route.query || {};
@@ -22,6 +24,8 @@ import { useRoute } from 'vue-router'
 const route = useRoute();
 // 读取数据
 const dataStore = useDataStore();
+const cartStore = useCartStore();
+
 watch(route, (val) => {
     dataStore.getData({ currentPage: 1, ...val.query } as GoodsParams)
 })
@@ -39,6 +43,11 @@ const load = async () => {
     <div class="goods-list-container" v-infinite-scroll="load">
         <div class="goods-list w1200">
           <GoodsItem v-bind="{...item}" v-for="item in list" :key="item.goodsSkuCode">
+            <template #action>
+                <div class="flex flex-end">
+                    <el-icon size="20" @click.stop="() => cartStore.addCart(item)" style="color:var(--color-primary)"><ShoppingCart /></el-icon>
+                </div>
+            </template>
           </GoodsItem>
       </div>
       <div class="tc flex-1" v-if="list.length > 20" style="width: 100%;">

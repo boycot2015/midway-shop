@@ -92,6 +92,19 @@ const DefaultLayoutRoutes: Array<RouteRecordRaw> = [
     path: '/userCenter',
     redirect: '/user/index'
   },
+  {
+    path: '/cart',
+    name: 'cart',
+    meta: {
+      title: '购物车',
+    //   hideBreadcrumb: true,
+      keywords: '购物车k',
+      description: '购物车d',
+      navActive: 'cart',
+    },
+    component: () =>
+      import(/* webpackChunkName: "cart" */ '@/views/Cart/index.vue'),
+  },
 ];
 
 export default DefaultLayoutRoutes;

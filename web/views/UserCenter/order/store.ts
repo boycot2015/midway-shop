@@ -20,7 +20,7 @@ export const useDataStore = defineStore('orderList', {
     return {
       loading: false,
       params: {
-        search: undefined,
+        search: null,
         displayOrderStatus: '0',
       } as OrderParams,
       pageData: {
@@ -41,12 +41,14 @@ export const useDataStore = defineStore('orderList', {
                 this.pageData[key] = val[key]
             }
         }
-        this.getData(val)
+        console.log(this.params, 'this.params');
+        
+        this.getData()
     },
-    async getData(params: any = {}) {
+    async getData() {
       try {
           this.loading = true;
-          const response: IResponseData<{ records?: OrderList[], page: Pagination }> = await queryData({ ...this.params, ...this.pageData, ...params });
+          const response: IResponseData<{ records?: OrderList[], page: Pagination }> = await queryData({ ...this.params, ...this.pageData });
           this.list = [];
           let temp = response.data?.records || [];
           temp.map(({orderPackageEntriesVOList, orderEntriesVOList, ...el }) => {

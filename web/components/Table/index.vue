@@ -3,6 +3,7 @@
         <el-table
         v-loading="loading"
         ref="tableRef"
+        class="table"
         style="width: 100%;min-height: 400px;margin-bottom: 20px;"
         @selection-change="onSelectionChange"
         @select-all="onSelectAll"
@@ -64,12 +65,14 @@ interface Selection {
     showCheckAll?: boolean;
     checkAllText: string;
     selectedRows: any[];
+    checkAllChange? (val:boolean): void;
+    selectionChange? (val:any[]): void;
 }
 interface Props<T> extends /* @vue-ignore */ Partial<InstanceType<typeof ElTable>> {
-    loading: boolean
+    loading?: boolean
     columns: Column<T>[]
     pagination?: Pagination
-    selection?: Selection
+    selection?: Selection | null
 }
 
 const tableRef = ref<InstanceType<typeof ElTable>>();
@@ -77,14 +80,17 @@ const props = defineProps<Props<any>>();
 // withDefaults(defineProps<Props<any>>, {
 //     loading: false,
 // })
-const onCheckAllChange = (val) => {
+const onCheckAllChange = (val:boolean) => {
     val && tableRef.value?.toggleAllSelection();
     !val && tableRef.value?.clearSelection();
+    if (props.selection) {
+        props.selection?.checkAllChange && props.selection?.checkAllChange(val)
+    }
 }
 const onSelectionChange = (val) => {
     if (props.selection) {
         props.selection.selectedRows = val
-        console.log(val, 'val');
+        props.selection?.selectionChange && props.selection?.selectionChange(val)
     }
 }
 const onSelectAll= (val) => {
@@ -92,8 +98,20 @@ const onSelectAll= (val) => {
         props.selection.checkAll = !!val.length;
     }
 }
+defineExpose({
+    onCheckAllChange,
+    onSelectionChange,
+    onSelectAll
+})
 </script>
 
 <style lang="scss" scoped>
-
+.table.el-table {
+    :deep(th.el-table__cell){
+        background-color: var(--color-table-head-bg);
+    }
+    :deep(thead) {
+        color: var(--color-font2);
+    }
+}
 </style>

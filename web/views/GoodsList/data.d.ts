@@ -1,12 +1,3 @@
-export interface GoodsList {
-    skuName?: string;
-    goodsName?: string;
-    goodsCode?: string;
-    goodsSkuCode?: string;
-    imgUrl?: string;
-    integralPrice?: string;
-    integralUnit?: string;
-}
 export interface GoodsParams {
     currentPage:number;
     goodsName?:string;

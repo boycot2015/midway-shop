@@ -3,11 +3,14 @@ import { GoodsItemProps } from "./data.d";
 </script>
 <script lang="ts" setup>
 // 读取数据
-const props = defineProps<GoodsItemProps>();
-
+// const props = defineProps<GoodsItemProps>();
+const props = withDefaults(defineProps<GoodsItemProps>(), {
+    border: true,
+    layout: 'vertical',
+})
 </script>
 <template>
-  <div class="goods-list-item" :class="{[props.size]:props.size, 'horizontal': props.layout==='horizontal'}" :key="props.goodsSkuCode" @click="props.goodsSkuCode && $router.push(`/goodsDetail/goodsDetail?goodsSkuCode=${props.goodsSkuCode}&goodsCode=${props.goodsCode}`)">
+  <div class="goods-list-item" :class="{[props.size]:props.size, 'horizontal': props.layout==='horizontal', 'border': props.border}" :key="props.goodsCode" @click="props.goodsCode && $router.push(`/goodsDetail/goodsDetail?goodsSkuCode=${props.goodsSkuCode}&goodsCode=${props.goodsCode}`)">
         <div class="goods-list-item-img">
             <el-image :src="props.imgUrl"></el-image>
         </div>
@@ -23,6 +26,7 @@ const props = defineProps<GoodsItemProps>();
                     <span class="goods-list-item-unit">{{ props.integralUnit || '积分' }}</span>
                 </div>
             </slot>
+            <slot name="action"></slot>
         </div>
     </div>
 </template>
@@ -40,8 +44,10 @@ const props = defineProps<GoodsItemProps>();
     display: inline-block;
     margin-right: 16px;
     margin-bottom: 16px;
-    border: 1px solid var(--color-border);
     background-color: var(--color-white);
+    &.border {
+        border: 1px solid var(--color-border);
+    }
     cursor: pointer;
     &:nth-child(5n) {
         margin-right: 0;

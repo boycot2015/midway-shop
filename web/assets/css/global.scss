@@ -43,6 +43,9 @@ p,li,ul,ol,h1,h2,h3,h4,h5,h6 {
 .flex-justify-center {
     justify-content: center;
 }
+.flex-end {
+    justify-content: flex-end;
+}
 .flex-justify-between {
     justify-content: space-between;
 }
@@ -115,4 +118,7 @@ a:hover {
 }
 .color-primary {
     color: var(--color-primary);
+}
+.color-price {
+    color: var(--color-price)
 }

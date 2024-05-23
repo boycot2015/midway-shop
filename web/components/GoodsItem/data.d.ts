@@ -1,14 +1,10 @@
-export interface GoodsItemProps {
+
+import { Goods } from '@/@types/goods';
+export interface GoodsItemProps extends Goods {
     size?: any; // small large mini, default: large
     layout?: string;// vertical horizontal, default: vertical
+    border?: boolean;// border
     ellipsis?: boolean;// default: false
-    skuName?: string;
-    goodsName?: string;
-    goodsCode?: string;
-    goodsSkuCode?: string;
-    imgUrl?: string;
-    integralPrice?: string|number;
-    integralUnit?: string;
 }
 export interface GoodsParams {
     currentPage?:number;

@@ -4,13 +4,14 @@
  */
 import { defineStore } from 'pinia';
 import { IResponseData } from '@/@types/utils.request';
-import { GoodsList, GoodsParams } from './data';
+import { GoodsParams } from './data';
 import { queryData } from './service';
 import { Pagination } from '@/@types/page'
+import { Goods } from '@/@types/goods'
 
 export interface IDetailState {
   loading: boolean;
-  goodsList: GoodsList[];
+  goodsList: Goods[];
   pageData: Pagination;
 }
 
@@ -30,7 +31,7 @@ export const useDataStore = defineStore('goodsList', {
     async getData(params: GoodsParams) {
       try {
         this.loading = true;
-        const response: IResponseData<{ records?: GoodsList[], page: Pagination }> = await queryData(params);
+        const response: IResponseData<{ records?: Goods[], page: Pagination }> = await queryData(params);
         const data = response.data?.records || [];
         if (data) {
           this.goodsList = params.currentPage > 1 ? [...this.goodsList, ...data] : data;
