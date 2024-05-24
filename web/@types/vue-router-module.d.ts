@@ -6,6 +6,6 @@ declare module 'vue-router' {
     title?: string; // 标题
     keywords?: string; // 关键字
     description?: string; // 说明
-    navActive?: string; // 选中的导航
+    navActive?: string|number; // 选中的导航
   }
 }

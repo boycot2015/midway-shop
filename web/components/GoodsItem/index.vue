@@ -16,8 +16,9 @@ const props = withDefaults(defineProps<GoodsItemProps>(), {
         </div>
         <div class="goods-list-item-text">
             <slot name="goodsName">
-                <div class="goods-list-item-name line-clamp2" :calss="props.ellipsis" v-html="props.goodsName || props.skuName"></div>
+                <div class="goods-list-item-name line-clamp2" :calss="props.ellipsis" :title="props.goodsName || props.skuName" v-html="props.goodsName || props.skuName"></div>
             </slot>
+            <slot name="goodsSpec"></slot>
             <slot name="goodsPrice">
                 <div class="goods-list-item-price">
                     <span class="goods-list-item-price-text">
@@ -34,10 +35,18 @@ const props = withDefaults(defineProps<GoodsItemProps>(), {
 .goods-list-item {
     &.horizontal {
         display: flex;
-        height: 84px;
+        height: 68px;
+        padding: 0;
+        margin-bottom: 0;
+        background-color: transparent;
         .goods-list-item-img {
-            width: 84px;
+            width: 68px;
+            height: 68px;
+            margin: 0;
             margin-right: 16px;
+        }
+        .goods-list-item-name {
+            margin-bottom: 0;
         }
     }
     padding: 16px;

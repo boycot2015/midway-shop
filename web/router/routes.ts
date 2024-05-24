@@ -2,6 +2,7 @@ import { RouteRecordRaw } from 'vue-router';
 import Home from '@/views/Home/index.vue';
 import CustomPage from '@/views/CustomPage/index.vue';
 import UserCenter from './modules/user';
+import SubmitOrder from './modules/order';
 
 const DefaultLayoutRoutes: Array<RouteRecordRaw> = [
   {
@@ -88,6 +89,7 @@ const DefaultLayoutRoutes: Array<RouteRecordRaw> = [
       import(/* webpackChunkName: "localapi" */ '@/views/Localapi/index.vue'),
   },
   UserCenter,
+  SubmitOrder,
   {
     path: '/userCenter',
     redirect: '/user/index'

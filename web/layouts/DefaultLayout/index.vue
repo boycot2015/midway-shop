@@ -33,17 +33,20 @@ onMounted(async () => {
         await cartStore.getCartCount();
     }
 })
+const SSR = import.meta.env.SSR;
 </script>
 <template>
-    <NavBar></NavBar>
-    <Header></Header>
-    <div class="layout-content">
-        <NavColumn></NavColumn>
-        <Breadcrumb v-if="!$route.meta.hideBreadcrumb"></Breadcrumb>
-        <router-view></router-view>
+    <div class="layout" v-if="!SSR">
+        <NavBar></NavBar>
+        <Header v-if="!$route.meta.hideHeader"></Header>
+        <div class="layout-content">
+            <NavColumn v-if="!$route.meta.hideNavColumn"></NavColumn>
+            <Breadcrumb v-if="!$route.meta.hideBreadcrumb"></Breadcrumb>
+            <router-view></router-view>
+        </div>
+        <Footer></Footer>
+        <el-backtop style="z-index: 10;"></el-backtop>
     </div>
-    <Footer></Footer>
-    <el-backtop></el-backtop>
 </template>
 
 <style lang="scss">

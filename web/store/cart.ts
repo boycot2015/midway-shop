@@ -24,7 +24,7 @@ type  CartInfo = {
 export const useCartStore = defineStore('cart', {
   state: () => {
     return {
-        loading: false,
+        loading: true,
         list: {} as CartInfo,
         validCartItems: [] as CartItem[] & Sku[],
         invalidCartItems: [] as CartItem[] & Sku[],
@@ -63,6 +63,7 @@ export const useCartStore = defineStore('cart', {
                 this.invalidCartItems.push({ ...cart, ...item });
             })
         });
+        this.setSelectedGoodsList([]);
         this.loading = false;
     },
     async addCart (data: Goods) {
@@ -82,22 +83,27 @@ export const useCartStore = defineStore('cart', {
         }
         this.loading = false;
     },
-    async updateCart (data: Goods) {
-        this.loading = true;
+    async updateCart (data: CartItem) {
+        // console.log(data, 'updateCart');
         let response:IResponseData = await request({
             url: '/api/shoppingcart/updateCart',
             method: 'post',
             data: {
-               quantity: 1,
+               quantity: data.quantity,
                goodsCode: data.goodsCode,
-               goodsSkuCode: data.goodsSkuCode
+               oldGoodsSkuCode: data.goodsSkuCode,
+               newGoodsSkuCode: data.goodsSkuCode
             }
         });
         if (response.success) {
-            ElMessage.success('更新成功');
-            this.getCartCount();
+            const currentIndex = this.selectedGoodsList.findIndex(el => el.goodsSkuCode === data.goodsSkuCode);
+            if (currentIndex === -1) return;
+            this.selectedGoodsList[currentIndex].quantity = data.quantity;
+            this.setSelectedGoodsList(this.selectedGoodsList);
+        } else {
+            ElMessage.error('更新购物车失败');
         }
-        this.loading = false;
+        // this.loading = false;
     },
     async deleteCart (data: Goods) {
         this.loading = true;
@@ -126,7 +132,6 @@ export const useCartStore = defineStore('cart', {
         }, 0);
     },
     setSelectedGoodsList (selection) {
-        // console.log(selection, 'selection');
         this.selectedGoodsList = selection;
         this.setTotoalAmount();
         this.setTotoalQuantity();
