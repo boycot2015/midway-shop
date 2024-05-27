@@ -37,7 +37,7 @@ const Order: RouteRecordRaw = {
                 hideBreadcrumb: true,
                 keywords: '结算支付k',
                 description: '结算支付d',
-                navActive: 2,
+                navActive: '',
             },
             component: () =>
             import(/* webpackChunkName: "SubmitOrderPay" */ '@/views/SubmitOrder/pay.vue'),

@@ -133,6 +133,7 @@ export interface OrderList {
     orderGoods:OrderGoods,
     spanIndex: number | string
     topSpanIndex: number | string
+    packageIndex: number | string
     topRows: number | string
     childRows: number | string
 }

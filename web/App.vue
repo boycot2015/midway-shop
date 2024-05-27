@@ -1,7 +1,9 @@
 <template>
-  <router-view  v-slot="{ Component }">
-    <component :is="Component" />
-  </router-view>
+<router-view v-slot="{ Component }">
+    <transition name="fade" mode="in-out">
+        <component :is="Component" />
+    </transition>
+</router-view>
 </template>
 <script lang="ts" setup>
 import { provide } from 'vue'

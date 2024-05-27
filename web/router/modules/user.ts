@@ -27,27 +27,55 @@ const User: RouteRecordRaw = {
         {
             path: '/userCenter/order',
             name: 'UserCenterOrder',
-            component: () => import('@/views/UserCenter/order/index.vue'),
+            redirect: '/userCenter/order/list',
             meta: {
                 title: '订单列表',
                 keywords: '订单列表k',
                 icon: 'List',
-                navActive: 'userCenter',
+                hideChildren: true,
                 description: '订单列表d',
             },
+            component: () => import('@/views/UserCenter/order/index.vue'),
+            children: [
+                {
+                    path: '/userCenter/order/list',
+                    name: 'UserCenterOrderList',
+                    component: () => import('@/views/UserCenter/order/list.vue'),
+                    meta: {
+                        title: '订单列表',
+                        keywords: '订单列表k',
+                        icon: 'List',
+                        description: '订单列表d',
+                    },
+                },
+                {
+                    path: '/userCenter/order/detail',
+                    name: 'UserCenterOrderDetail',
+                    component: () => import('@/views/UserCenter/order/detail.vue'),
+                    meta: {
+                        title: '订单详情',
+                        hideInMenu: true,
+                        hideMenu: true,
+                        keywords: '订单详情k',
+                        navActive: 'UserCenterOrder',
+                        description: '订单详情d',
+                    },
+                },
+            ]
         },
-        {
-            path: '/userCenter/order/detail',
-            name: 'UserCenterOrderDetail',
-            component: () => import('@/views/UserCenter/order/detail.vue'),
-            meta: {
-                title: '订单详情',
-                hideInMenu: true,
-                keywords: '订单详情k',
-                navActive: '/userCenter/order',
-                description: '订单详情d',
-            },
-        },
+        // {
+        //     path: '/userCenter/order/detail',
+        //     name: 'UserCenterOrderDetail',
+        //     component: () => import('@/views/UserCenter/order/detail.vue'),
+        //     meta: {
+        //         title: '订单详情',
+        //         hideInMenu: true,
+        //         hideMenu: true,
+        //         keywords: '订单详情k',
+        //         navActive: 'UserCenterOrder',
+        //         description: '订单详情d',
+        //     },
+        // },
         {
             path: '/userCenter/safe',
             name: 'UserCenterSafe',

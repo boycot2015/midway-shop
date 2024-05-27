@@ -43,7 +43,7 @@
                 </Table>
             </el-descriptions-item>
             <el-descriptions-item align="right">
-                共 <span class="color-price">{{ data.reduce((p, n) => p + n.num, 0) }}</span> 件商品 商品总额： <span class="color-price">{{ data.reduce((p, n) => p + (n.integralPrice * n.num), 0) }} {{ store.integralUnit }}</span>
+                共 <span class="color-price">{{ data.reduce((p, n) => p + (n.num || 1), 0) }}</span> 件商品 商品总额： <span class="color-price">{{ data.reduce((p, n) => p + ((n?.integralPrice || 0) * (n.num || 1)), 0) }} {{ store.integralUnit }}</span>
             </el-descriptions-item>
         </el-descriptions>
     </div>

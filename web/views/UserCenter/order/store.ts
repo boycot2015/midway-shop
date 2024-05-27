@@ -55,12 +55,13 @@ export const useDataStore = defineStore('orderList', {
             if (orderPackageEntriesVOList && orderPackageEntriesVOList.length) {
                 let spanIndex = 0;
                 let totalRows = orderPackageEntriesVOList.reduce((total, item) => total + (item.orderEntriesVOList?.length || 0), 0);
-                orderPackageEntriesVOList.map(packageItem => {
+                orderPackageEntriesVOList.map((packageItem, packageIndex) => {
                     if (packageItem.orderEntriesVOList && packageItem.orderEntriesVOList.length) {
                         packageItem.orderEntriesVOList.map((orderGoods, index) => {
                             this.list.push({
                                 ...el,
                                 spanIndex: index,
+                                packageIndex,
                                 topSpanIndex: spanIndex,
                                 topRows: totalRows,
                                 childRows: packageItem.orderEntriesVOList.length,

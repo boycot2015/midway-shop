@@ -7,7 +7,7 @@
       >
         <template v-for="item in menu">
             <el-menu-item-group :index="item.path" :key="item.path" :title="item.meta?.title" v-if="item.children && item.children.length && !item.meta?.hideChildren">
-            <el-menu-item :index="child.path" :key="child.path" v-show="!child.meta?.hideInMenu" v-for="child in item.children" >
+            <el-menu-item :index="child.redirect||child.path" :key="child.path" v-show="!child.meta?.hideInMenu" v-for="child in item.children" >
                 <el-icon><component :is="child.meta?.icon" /></el-icon>
                 {{child.meta?.title}}
             </el-menu-item>

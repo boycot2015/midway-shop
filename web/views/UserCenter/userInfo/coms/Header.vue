@@ -14,15 +14,15 @@
             <el-col :span="1"><el-divider style="height: 100%;" direction="vertical" /></el-col>
             <el-col :span="5">
                 <div class="flex text flex-justify-center flex-column user-info-header-section">
-                    <p class="title color-primary">{{ userInfo.totalIntegralAmount || 0 }}<span v-if="appStore.websiteConfig">{{ appStore.websiteConfig.websiteUnit }}</span></p>
-                    <p class="txt">余额 <span class="color-primary">{{ userInfo.integralPermanentAmount }}{{ appStore.websiteConfig.websiteUnit }}</span></p>
+                    <p class="title color-primary">{{ userInfo.totalIntegralAmount || 0 }}<span v-if="websiteConfig">{{ websiteConfig.websiteUnit }}</span></p>
+                    <p class="txt">余额 <span class="color-primary">{{ userInfo.integralPermanentAmount }}{{ websiteConfig.websiteUnit }}</span></p>
                 </div>
             </el-col>
             <el-col :span="1"><el-divider style="height: 100%;" direction="vertical" /></el-col>
             <el-col :span="5">
                 <div class="flex text flex-justify-center flex-column user-info-header-section">
-                    <p class="title color-primary">{{ userInfo.overdue30IntegralAmount || 0 }}<span v-if="appStore.websiteConfig">{{ appStore.websiteConfig.websiteUnit }}</span></p>
-                    <p class="txt">即将到期 <span class="color-primary">{{ userInfo.overdue30IntegralAmount || 0 }}<span v-if="appStore.websiteConfig">{{ appStore.websiteConfig.websiteUnit }}</span></span></p>
+                    <p class="title color-primary">{{ userInfo.overdue30IntegralAmount || 0 }}<span v-if="websiteConfig">{{ websiteConfig.websiteUnit }}</span></p>
+                    <p class="txt">即将到期 <span class="color-primary">{{ userInfo.overdue30IntegralAmount || 0 }}<span v-if="websiteConfig">{{ websiteConfig.websiteUnit }}</span></span></p>
                 </div>
             </el-col>
             <el-col :span="1"><el-divider style="height: 100%;" direction="vertical" /></el-col>
@@ -37,6 +37,7 @@ import { useUserStore } from '@/store/user';
 import { useAppStore } from '@/store/app';
 const userStore = useUserStore();
 const appStore = useAppStore();
+const websiteConfig = computed(() => appStore.websiteConfig || {})
 const userInfo = computed(() => userStore.userInfo)
 </script>
 

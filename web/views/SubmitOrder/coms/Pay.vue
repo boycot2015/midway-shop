@@ -38,7 +38,11 @@ const payCash = computed(() => store.payCash);
 const onSubmit = () => {
     store.submitOrder().then(res => {
         ElMessage.success('提交成功');
-        router.push('/order');
+        if (res.orderCode && res.payCash) {
+            router.push('/order/pay?orderCode=' + res.orderCode);
+        } else {
+            router.push('/order/success');
+        }
     });
 }
 </script>

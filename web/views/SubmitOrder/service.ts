@@ -35,3 +35,11 @@ export async function submit(data): Promise<any> {
       data,
     });
 }
+export async function getPayData(data): Promise<any> {
+    return request({
+      url: '/api/order/gotoPayPage',
+      method: 'post',
+      data,
+    });
+}
+// 

@@ -44,7 +44,7 @@ onMounted(() =>{
                     </span>
                     <router-link to="/login" v-else :class="{'active': meta.navActive === 'login'}">登录</router-link>
                     <el-divider direction="vertical" />
-                    <router-link to="/goodsList" :class="{'active': meta.navActive === 'goodsList'}">商品中心</router-link><el-divider direction="vertical" />
+                    <!-- <router-link to="/goodsList" :class="{'active': meta.navActive === 'goodsList'}">商品中心</router-link><el-divider direction="vertical" /> -->
                     <!-- <router-link :to="{path:'/localapi', query: {'uid':10}}" :class="{'active': meta.navActive === 'localapi'}">个人中心</router-link> -->
                 </nav>
             </el-col>

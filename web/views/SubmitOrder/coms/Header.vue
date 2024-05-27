@@ -18,7 +18,7 @@ let websiteConfig = computed<any>(() => appStore.$state.websiteConfig || {});
     <div class="header">
         <div class="w1200 flex-center flex flex-justify-between">
             <el-image class="logo" @click="router.push('/')" :src="websiteConfig.websiteLogo"></el-image>
-            <div class="step tl">
+            <div class="step tl" v-if="$route.meta.navActive">
                 <el-steps
                     align-center
                     style="min-width: 500px"
@@ -30,6 +30,7 @@ let websiteConfig = computed<any>(() => appStore.$state.websiteConfig || {});
                     <el-step title="3、成功提交订单" />
                 </el-steps>
             </div>
+            <span style="font-size: 20px;" v-else>{{ $route.meta.title }}</span>
         </div>
     </div>
 </template>

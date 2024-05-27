@@ -6,6 +6,7 @@
 </template>
 
 <script setup lang="ts">
+import { onMounted } from 'vue';
 import { useUserStore } from '@/store/user';
 import request from '@/utils/request';
 import Header from './coms/Header.vue';
@@ -19,10 +20,12 @@ function getInfo (data: any = {}): Promise<any> {
   });
 }
 const userStore = useUserStore();
-getInfo().then((res: any) => {
-    if (res && res.success) {
-        userStore.setUserInfo(res.data);
-    }
+onMounted(() => {
+    getInfo().then((res: any) => {
+        if (res && res.success) {
+            userStore.setUserInfo(res.data);
+        }
+    })
 })
 </script>
 <style lang="scss" scoped>

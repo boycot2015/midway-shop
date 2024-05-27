@@ -1,11 +1,15 @@
 <template>
     <div class="w1200">
         <el-row class="user-main" :gutter="20">
-            <el-col :span="4" class="user-main-left">
+            <el-col :span="4" class="user-main-left" v-if="!$route.meta.hideMenu">
                 <Aside></Aside>
             </el-col>
-            <el-col :span="20" class="user-main-right">
-                <router-view></router-view>
+            <el-col :span="$route.meta.hideMenu?24:20" class="user-main-right">
+                <router-view v-slot="{ Component, route }">
+                    <transition name="fade" mode="in-out">
+                        <component :is="Component" :key="route.path" />
+                    </transition>
+                </router-view>
             </el-col>
         </el-row>
     </div>
@@ -17,7 +21,6 @@ export default defineComponent({
   },
   seo({store}) {
    const userStore = useUserStore(store);
-   console.log(userStore, 'userStore');
    return {
       title: userStore.userInfo.nickName + '-个人中心',
    }

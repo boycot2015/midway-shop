@@ -4,7 +4,7 @@
             <el-col :span="4" v-for="item in list" :key="item.prop">
                 <router-link :to="`/userCenter/order?status=${item.orderStatus}`">
                     <el-card shadow="hover" class="tc">
-                        <el-badge :value="userInfo[item.prop || '']" :hidden="!userInfo[item.prop || '']"><el-icon><component :is="item.icon" /></el-icon></el-badge>
+                        <el-badge :value="userInfo[item.prop || '']||0" :hidden="!userInfo[item.prop || '']"><el-icon><component :is="item.icon" /></el-icon></el-badge>
                         <p class="title">{{item.title}}</p>
                     </el-card>
                 </router-link>

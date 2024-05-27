@@ -30,7 +30,7 @@ if (route.query.goodsSkuCode) {
 } else {
     dataStore.setData(cartStore.selectedGoodsList);
 }
-dataStore.getData(route.query.goodsSkuCode);
+dataStore.getData(route.query.goodsSkuCode as string);
 </script>
 <style lang="scss" scoped>
 // .user-main-right {
