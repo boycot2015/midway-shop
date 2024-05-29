@@ -1,12 +1,14 @@
 <script lang="ts">
 import { defineComponent, computed, ref, reactive, nextTick } from 'vue'
-import { useDetailStore } from '@/views/Detail/store';
-import { GoodsDetail } from '@/views/Detail/data.d';
+import { useDetailStore } from '../store';
+import { useCartStore } from '@/store/cart';
+import { GoodsDetail } from '../data.d';
 import { Sku } from '@/@types/goods.d';
 import { useRoute, useRouter } from 'vue-router';
 import { ArrowDown } from '@element-plus/icons-vue'
 import { useAppStore } from '@/store/app';
 const appStore = useAppStore();
+const cartStore = useCartStore();
 appStore.getWebsiteConfig();
 let websiteConfig = computed<any>(() => appStore.$state.websiteConfig || {});
 </script>
@@ -24,13 +26,23 @@ const region = ref({
     cityId: '',
     countyId: ''
 })
-let currentSku = ref(detailStore.goodsData.goodsSkuList?.find(item => item.goodsSkuCode === route.query.goodsSkuCode) as Sku);
-// console.log('router, ctx', detailStore.goodsData, goodsData.value, currentSku);
+let currentSku = ref(goodsData.value.goodsSkuList?.find(item => item.goodsSkuCode === route.query.goodsSkuCode) || {} as Sku);
+// console.log('router, ctx', goodsData.value, goodsData.value, currentSku);
 const onChangeCarousel = (item, index) => {
     carouselRef.value.setActiveItem(index);
 }
+// 切换sku
 const onChangeSku = (current, index) => {
-    currentSku.value = detailStore.goodsData.goodsSkuList[index] as Sku;
+    currentSku.value = goodsData.value.goodsSkuList[index] as Sku;
+}
+// 添加购物车
+const onAddCart = () => {
+    cartStore.addCart({ quantity: currentSku.value.minimumOrderQuantity || 1, goodsCode: currentSku.value.goodsCode, goodsSkuCode: currentSku.value.goodsSkuCode, integralPrice: currentSku.value.integralPrice });
+}
+// 立即购买
+const onBuy = () => {
+    cartStore.setSelectedGoodsList([{ quantity: currentSku.value.minimumOrderQuantity || 1, goodsCode: currentSku.value.goodsCode, goodsSkuCode: currentSku.value.goodsSkuCode,integralPrice: 0, }]);
+    router.push({ path: '/order/submit' });
 }
 </script>
 <template>
@@ -50,7 +62,7 @@ const onChangeSku = (current, index) => {
               :interval="5000"
               arrow="always"
               height="500px"
-              v-if="currentSku?.goodsSkuImage"
+              v-if="currentSku.goodsSkuImage"
               @change="val => currentIndicator = val"
               >
                   <el-carousel-item v-for="item in currentSku.goodsSkuImage" :key="item.imgName">
@@ -96,7 +108,7 @@ const onChangeSku = (current, index) => {
                       <el-form-item label="服务">{{ goodsData.returnGoodsRulesName }}</el-form-item>
                   </div>
                   <el-form-item :label="goodsSpec.specName" v-for="(goodsSpec, index) in goodsData.goodsSpecList" :key="goodsSpec.specId">
-                      <el-button class="color-item fl" :type="currentSku.goodsSkuSpec.find(val => goodsSpec.specId === val.specNameCode)?.specValueCode === spec.valueId ? 'primary':''" v-for="(spec, index) in goodsSpec.values" :key="spec.valueId" @click="onChangeSku(spec, index)">
+                      <el-button class="color-item fl" v-if="currentSku.goodsSkuSpec" :type="currentSku.goodsSkuSpec.find(val => goodsSpec.specId === val.specNameCode)?.specValueCode === spec.valueId ? 'primary':''" v-for="(spec, index) in goodsSpec.values" :key="spec.valueId" @click="onChangeSku(spec, index)">
                           {{ spec.valueName }}
                   </el-button>
                   </el-form-item>
@@ -105,8 +117,8 @@ const onChangeSku = (current, index) => {
                   </el-form-item>
                   <el-form-item>
                       <div class="actions flex" style="width: 100%;">
-                          <el-button size="large">加入购物车</el-button>
-                          <el-button size="large" type="primary">立即购买</el-button>
+                          <el-button size="large" @click="onAddCart">加入购物车</el-button>
+                          <el-button size="large" type="primary" @click="onBuy">立即购买</el-button>
                           <el-button class="star" size="large">
                               <el-rate v-model="currentSku.minimumOrderQuantity" :max="1"></el-rate>
                               收藏

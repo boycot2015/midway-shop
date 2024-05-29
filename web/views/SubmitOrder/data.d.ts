@@ -16,8 +16,13 @@ enum PayWay {
     1002 = '余额+现金'
 }
 enum PayMethod {
-    1001 = '积分',
-    1002 = '余额+现金'
+    1002 = '支付宝',
+    1004 = '微信'
+}
+enum BrowserType {
+    1001 = '移动',
+    1001 = '小程序',
+    1004 = 'web'
 }
 export type PayData = {
     "failGoodsSkuList": [],
@@ -31,6 +36,7 @@ export type PayData = {
     "payMethodList": PayMethod[],
     "payStatus": 1001,
     "payWay": PayWay,
+    "payMethod": number,
     "soOrderCode": "SO848989738772205569",
     "submitOrderToken": "B2C:ORDER:TOKEN:672128:1207189",
     "createTime": "2024-05-24 18:22:08",
@@ -50,12 +56,17 @@ export type PayData = {
     "payStatus": 1001,
     "payType": 1002,
     "payTypeStr": "",
-    "payWay": null,
     "paymentUrl": "",
     "returnUrl": "",
     "soOrderCode": "SO848989738772205569",
     "thirdOrderCode": "",
     "tokenId": "",
     "totalPayCashAmount": 0.01,
-    "totalPayIntegralAmount": 499
+    "totalPayIntegralAmount": 499,
+    qrCode?:string
+}
+type PayParams = {
+    "payMethod": number,
+    "orderCode": string,
+    "browserType": number
 }

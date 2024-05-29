@@ -4,18 +4,18 @@ import { ElMessage } from 'element-plus';
 import { IResponseData } from '@/@types/utils.request';
 import { Sku, GoodsSkuImage, GoodsSkuSpec, Goods } from '@/@types/goods'
 interface CartItem extends Sku {
-    "addCartTime": Date
-    "cartItems": Sku[]
-    "goodsName": string
-    "goodsSkuImageList": GoodsSkuImage[]
-    "goodsSkuList": Sku[]
-    "goodsSkuSalesAreaList": []
-    "goodsSpecList": GoodsSkuSpec[]
-    "goodsTitle": string
-    "goodsUnit": string
-    "isThirdGoods": false
-    "taxRate": number
-    "taxRateDescription": string
+    "addCartTime"?: Date
+    "cartItems"?: Sku[]
+    "goodsName"?: string
+    "goodsSkuImageList"?: GoodsSkuImage[]
+    "goodsSkuList"?: Sku[]
+    "goodsSkuSalesAreaList"?: []
+    "goodsSpecList"?: GoodsSkuSpec[]
+    "goodsTitle"?: string
+    "goodsUnit"?: string
+    "isThirdGoods"?: false
+    "taxRate"?: number
+    "taxRateDescription"?: string
 }
 type  CartInfo = {
     "invalidCartItems": CartItem[],
@@ -42,37 +42,37 @@ export const useCartStore = defineStore('cart', {
         });
         this.totalCount = response.data as unknown as number || 0;
     },
-    async getCartData (data: any = {}) {
+    getCartData (data: any = {}) {
         this.loading = true;
         this.validCartItems = [];
         this.invalidCartItems = [];
-        let responseList = await request<IResponseData<CartInfo[]>>({
+        request<IResponseData<CartInfo[]>>({
             url: '/api/shoppingcart/queryCartList',
             method: 'post',
             data
+        }).then((responseList) => {
+            this.list = responseList.data as unknown as CartInfo || {};
+            this.list.validCartItems.map(item => {
+                item.cartItems?.map(cart => {
+                    this.validCartItems.push({ ...cart, ...item });
+                })
+            });
+            this.list.invalidCartItems.map(item => {
+                item.cartItems?.map(cart => {
+                    this.invalidCartItems.push({ ...cart, ...item });
+                })
+            });
+            this.setSelectedGoodsList([]);
+            this.loading = false;
         });
-        this.list = responseList.data as unknown as CartInfo || {};
-        
-        this.list.validCartItems.map(item => {
-            item.cartItems.map(cart => {
-                this.validCartItems.push({ ...cart, ...item });
-            })
-        });
-        this.list.invalidCartItems.map(item => {
-            item.cartItems.map(cart => {
-                this.invalidCartItems.push({ ...cart, ...item });
-            })
-        });
-        this.setSelectedGoodsList([]);
-        this.loading = false;
     },
-    async addCart (data: Goods) {
+    async addCart (data: CartItem) {
         this.loading = true;
         let response:IResponseData = await request({
             url: '/api/shoppingcart/addCart',
             method: 'post',
             data: {
-               quantity: 1,
+               quantity: data.quantity || 1,
                goodsCode: data.goodsCode,
                goodsSkuCode: data.goodsSkuCode
             }
@@ -123,7 +123,7 @@ export const useCartStore = defineStore('cart', {
     },
     setTotoalAmount () {
         this.totalAmount = this.selectedGoodsList.reduce((prev, next) => {
-            return prev + (next.integralPrice * next.quantity);
+            return prev + ((+next.integralPrice || 0) * next.quantity);
         }, 0);
     },
     setTotoalQuantity () {
@@ -131,7 +131,7 @@ export const useCartStore = defineStore('cart', {
             return prev + next.quantity;
         }, 0);
     },
-    setSelectedGoodsList (selection) {
+    setSelectedGoodsList (selection: CartItem[]) {
         this.selectedGoodsList = selection;
         this.setTotoalAmount();
         this.setTotoalQuantity();

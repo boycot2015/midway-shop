@@ -17,7 +17,7 @@ const websitePcFixedList = data.value?.websitePcFixedList?.map(el => {
 })
 
 watch(route, (val) => {
-    columnName.value = val.name === 'Index' ? '/home' : val.name
+    columnName.value = val.name === 'Index' ? '/home' : val.path
 });
 const handleClick = (tab: TabsPaneContext, event: Event, navLinkList) => {
     if (tab.paneName) {

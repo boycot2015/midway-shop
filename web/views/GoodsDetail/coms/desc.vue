@@ -1,7 +1,7 @@
 <script lang="ts">
 import { defineComponent, computed, ref, reactive, nextTick } from 'vue'
-import { useDetailStore } from '@/views/Detail/store';
-import { GoodsDetail, RateData } from '@/views/Detail/data.d';
+import { useDetailStore } from '../store';
+import { GoodsDetail, RateData } from '../data.d';
 import { Sku } from '@/@types/goods.d';
 import { useRoute, useRouter } from 'vue-router';
 import { ArrowDown } from '@element-plus/icons-vue';
@@ -35,9 +35,9 @@ const getAttrs = () => {
     return temp
 }
 
-let currentSku = ref(detailStore.goodsData.goodsSkuList?.find(item => item.goodsSkuCode === route.query.goodsSkuCode) as Sku);
+let currentSku = ref(goodsData.value.goodsSkuList?.find(item => item.goodsSkuCode === route.query.goodsSkuCode) || {} as Sku);
 const goodsAttributes = getAttrs()
-// console.log('router, ctx', detailStore.goodsData, goodsData.value, currentSku);
+// console.log('router, ctx', goodsData.value, goodsData.value, currentSku);
 
 const onTabClick = (item?:any) => {
     rateParams.sortType = item
@@ -45,6 +45,8 @@ const onTabClick = (item?:any) => {
         detailStore.getRateData({ goodsCode: route.query.goodsCode, ...rateParams });
     })
 }
+detailStore.getRateData({ goodsCode: route.query.goodsCode, currentPage: 1, pageSize: 20 })
+
 </script>
 <template>
   <div class="desc">
@@ -137,9 +139,9 @@ const onTabClick = (item?:any) => {
                                           <el-form-item>{{ item.goodsName }}</el-form-item>
                                           <el-form-item>{{ item.createTime }}</el-form-item>
                                           <el-form-item>
-                                              <p class="flex">
-                                                  <span><font-awesome-icon :icon="['far', 'thumbs-up']" /> 有用</span>
-                                                  <span><font-awesome-icon :icon="['far', 'thumbs-down']" /> 无用</span>
+                                              <p class="flex flex-justify-between">
+                                                  <span><font-awesome-icon :icon="['fas', 'thumbs-up']" /> 有用</span>
+                                                  <span><font-awesome-icon :icon="['fas', 'thumbs-down']" /> 无用</span>
                                                   <span><font-awesome-icon :icon="['fas', 'triangle-exclamation']" /> 举报</span>
                                               </p>
                                           </el-form-item>

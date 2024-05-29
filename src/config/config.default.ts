@@ -42,9 +42,9 @@ export default {
         // `headers` are custom headers to be sent
         headers: {
           'X-Requested-With': 'XMLHttpRequest',
-          'Website-Path': 'cs0188' // cs0188 DELL
+          'Website-Path': 'ptsc39' // cs0188 DELL ptsc39
         },
-        timeout: 5000, // default is `0` (no timeout)
+        timeout: 15000, // default is `0` (no timeout)
 
         // `withCredentials` indicates whether or not cross-site Access-Control requests
         // should be made using credentials

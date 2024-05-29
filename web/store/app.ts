@@ -56,17 +56,18 @@ export const useAppStore = defineStore('app', {
         });
         this.websiteConfig = response.data as WebsiteProps['websiteConfig'];
     },
-    async getWebsiteDecoration (params:{ pageId?: string | number, pageType?: string | number } = {}) {
-        let response = await request({
+    getWebsiteDecoration (params:{ pageId?: string | number, pageType?: string | number } = {}) {
+        request({
             url: '/api/website/decoration',
             method: 'get',
             params
+        }).then(response => {
+            if (params.pageId && params.pageType) {
+                this.websiteCustomPage = response.data as WebsiteProps['websiteCustomPage'];
+            } else {
+                this.websitePage = response.data as WebsiteProps['websiteCustomPage'];
+            }
         });
-        if (params.pageId && params.pageType) {
-            this.websiteCustomPage = response.data as WebsiteProps['websiteCustomPage'];
-        } else {
-            this.websitePage = response.data as WebsiteProps['websiteCustomPage'];
-        }
     }
   },
   persist: true,

@@ -11,6 +11,7 @@ import { Goods } from '@/@types/goods'
 
 export interface IDetailState {
   loading: boolean;
+  query: GoodsParams;
   goodsList: Goods[];
   pageData: Pagination;
 }
@@ -19,6 +20,9 @@ export const useDataStore = defineStore('goodsList', {
   state(): IDetailState {
     return {
       loading: false,
+      query: {
+        onlyInStock: true,
+      } as GoodsParams,
       pageData: {
         currentPage: 1,
         pageSize: 20,
@@ -28,16 +32,20 @@ export const useDataStore = defineStore('goodsList', {
     };
   },
   actions: {
-    async getData(params: GoodsParams) {
+    async getData(params?: GoodsParams) {
       try {
         this.loading = true;
+        params = { ...this.query, ...params || {}, onlyInStock: this.query.onlyInStock || null };
         const response: IResponseData<{ records?: Goods[], page: Pagination }> = await queryData(params);
         const data = response.data?.records || [];
         if (data) {
           this.goodsList = params.currentPage > 1 ? [...this.goodsList, ...data] : data;
         }
         this.loading = false;
-        this.pageData = response.data.page;
+        this.pageData = {
+            ...this.pageData,
+            totalPage: response.data?.page.totalPage || 0,
+        };
       } catch (error: any) {
         // console.log('error useDataStore getData', error);
       }

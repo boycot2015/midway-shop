@@ -26,9 +26,13 @@ const route = useRoute();
 const cartStore = useCartStore();
 const dataStore = useDataStore();
 if (route.query.goodsSkuCode) {
-    dataStore.setData([route.query]);
+    dataStore.setData();
 } else {
-    dataStore.setData(cartStore.selectedGoodsList);
+    dataStore.setData({ goodsList: cartStore.selectedGoodsList.map(el => ({
+        quantity: el.quantity,
+        goodsCode: el.goodsCode,
+        goodsSkuCode: el.goodsSkuCode,
+    }))});
 }
 dataStore.getData(route.query.goodsSkuCode as string);
 </script>

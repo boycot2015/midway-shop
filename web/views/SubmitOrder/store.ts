@@ -4,9 +4,9 @@
  */
  import { defineStore } from 'pinia';
  import { IResponseData } from '@/@types/utils.request';
- import { GoodsParams, OrderParams, PayData } from './data';
+ import { GoodsParams, OrderParams, PayData, PayParams } from './data';
 import { Sku } from '@/@types/goods';
- import { getAddressData, queryData, submit, getPayData } from './service';
+ import { getAddressData, queryData, submit, getPayData, getOrderPayData } from './service';
  import { Address } from '@/@types/address';
  import { ElMessage } from 'element-plus';
 
@@ -46,7 +46,7 @@ import { Sku } from '@/@types/goods';
     "totalSellingPrice": 0
 }
  
- export const useDataStore = defineStore('orderData', {
+ export const useDataStore = defineStore('submitOrderData', {
    state(): IDataState {
      return {
         loading: false,
@@ -57,7 +57,9 @@ import { Sku } from '@/@types/goods';
         payIntegral: 0,
         buyerMsg: '',
         shoppingCart: false,
-        payData: {} as PayData,
+        payData: {
+            payMethod: 1001,
+        } as PayData,
         "groupBookingOrder": false,
         "integral": 9830345,
         "integralRatio": 100,
@@ -118,8 +120,13 @@ import { Sku } from '@/@types/goods';
          console.log('error useDataStore getData', error);
        }
      },
-     setData(params: GoodsParams[]) {
-        this.goodsList = params
+     setData(params?: any) {
+         console.log(params, 'params[key]');
+        for (const key in params) {
+            if (Object.prototype.hasOwnProperty.call(this, key)) {
+                this[key] = params[key];
+            }
+        }
       },
       setPrice (val) {
         this.payCash = ((this.totalIntegralPrice - this.payIntegral) * 1 / this.integralRatio).toFixed(2) || 0
@@ -147,13 +154,22 @@ import { Sku } from '@/@types/goods';
             response.success && resolve(response.data);
         })
       },
-      getPayData (orderCode: string) {
-        getPayData({ orderCode }).then((response:IResponseData<PayData>) => {
+      getPayData (orderCode: string): Promise<any> {
+        return getPayData({ orderCode }).then((response:IResponseData<PayData>) => {
             if (response.success && response.data) {
-                this.payData = response.data || {};
+                this.payData = { ...this.payData, ...response.data || {} };
+            }
+            return response;
+        });
+      },
+      getOrderPayData (params: PayParams) {
+        getOrderPayData(params).then((response:IResponseData<string>) => {
+            if (response.success && response.data) {
+                this.payData.qrCode = response.data || '';
             }
         });
-      }
+      },
+      
    },
    persist: true,
  });

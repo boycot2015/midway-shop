@@ -4,7 +4,8 @@ export interface Goods {
     goodsCode?: string;
     goodsSkuCode?: string;
     imgUrl?: string;
-    integralPrice?: string;
+    soldOut?: boolean;
+    integralPrice?: number|string;
     integralUnit?: string;
 }
 export type GoodsSkuImage = {
@@ -17,96 +18,96 @@ export type GoodsSkuImage = {
     sortValue: number
 }
 export type GoodsSkuSpec = {
-    "goodsSkuCode": "2888888889071426",
-    "id": 26000712042,
-    "specName"?: "颜色",
-    "specNameCode"?: "0",
-    "specNameSort"?: 0,
-    "specValue"?: "咖喱色",
-    "specValueCode"?: "2888888888888889",
-    "specValueSort"?: 0
+    "goodsSkuCode": string,
+    "id": number,
+    "specName"?: string,
+    "specNameCode"?: string,
+    "specNameSort"?: number,
+    "specValue"?: string,
+    "specValueCode"?: string,
+    "specValueSort"?: number
 }
 type goodsSpec = {
     "nameSort": 0,
-    "specId": "0",
-    "specName": "颜色",
+    "specId": string,
+    "specName": string,
     "values": [
         {
-            "valueId": "18",
-            "valueName": "粉红色",
-            "valueSort": 0
+            "valueId": string,
+            "valueName": string,
+            "valueSort": number
         },
         {
-            "valueId": "2888888888888889",
-            "valueName": "咖喱色",
-            "valueSort": 0
+            "valueId": string,
+            "valueName": string,
+            "valueSort": number
         }
     ]
 }
 export interface Sku {
     "activityGoodsInfo"?: [],
-    "addMode"?: 1001,
-    "availableStock"?: 0,
-    "barCode"?: "33876786",
-    "categoryRate"?: 0,
+    "addMode"?: number,
+    "availableStock"?: number,
+    "barCode"?: string,
+    "categoryRate"?: number,
     "discount"?: null,
     "discountRate"?: null,
     "downShelvesTime"?: null,
-    "erpCode"?: "2888888889071426",
-    "goodsCode"?: "2888888889071349",
+    "erpCode"?:string,
+    "goodsCode"?:string,
     "goodsImages"?: [],
-    "goodsSkuCode"?: "2888888889071426",
+    "goodsSkuCode"?: string,
     "goodsSkuImage"?: GoodsSkuImage[],
     goodsSkuImgUrl?: string,
     quantity: number,
     "goodsSkuLabel"?: [],
-    "goodsSkuName"?: "系统自有商品lzx0011 咖喱色",
+    "goodsSkuName"?: string,
     "goodsSkuSalesArea"?: [],
     "goodsSkuSpec"?: GoodsSkuSpec[],
     "goodsSkuStock"?: {
-        "goodsSkuCode"?: "2888888889071426",
-        "inventory"?: 16965,
-        "lockNum"?: 0,
-        "lowestNum"?: 0,
-        "status"?: 1001,
-        "usableNum"?: 16965
+        "goodsSkuCode"?: string,
+        "inventory"?: number,
+        "lockNum"?: number,
+        "lowestNum"?: number,
+        "status"?: number,
+        "usableNum"?: number
     },
-    "goodsSkuTitle"?: "系统自有商品lzx0011",
-    "goodsType"?: 1001,
-    "hasEquityTask"?: false,
-    "hidden"?: false,
-    "id"?: 364267,
-    "imgGroupCode"?: "2888888889318269",
-    "includingFreight"?: false,
-    "integralPrice": 31313,
+    "goodsSkuTitle"?: string,
+    "goodsType"?: number,
+    "hasEquityTask"?: boolean,
+    "hidden"?: boolean,
+    "id"?: number,
+    "imgGroupCode"?: string,
+    "includingFreight"?: boolean,
+    "integralPrice": number | string,
     "interestsId"?: null,
     "interestsIntegralPrice"?: null,
-    "interestsName"?: "",
+    "interestsName"?: string,
     "interestsPrice"?: null,
-    "isEnablePresale"?: false,
-    "isMemberLevelGoods"?: false,
-    "isOpenLadderPrice"?: false,
-    "isQuotaGoods"?: false,
-    "isSearchDisplay"?: 1,
+    "isEnablePresale"?: boolean,
+    "isMemberLevelGoods"?: boolean,
+    "isOpenLadderPrice"?: boolean,
+    "isQuotaGoods"?: boolean,
+    "isSearchDisplay"?: number,
     "ladderPriceGoodsList"?: [],
-    "marketPrice"?: 15,
-    "minimumOrderQuantity"?: 1,
-    "modelNumber"?: "系统自有商品lzx0011",
-    "originalIntegralPrice"?: 31313,
-    "originalSellingPrice"?: 313.13,
-    "paperWork"?: "",
-    "profitRate"?: 0,
-    "purchasedQuantity"?: 0,
+    "marketPrice"?: number,
+    "minimumOrderQuantity"?: number,
+    "modelNumber"?: string,
+    "originalIntegralPrice"?: number,
+    "originalSellingPrice"?: number,
+    "paperWork"?: string,
+    "profitRate"?: number,
+    "purchasedQuantity"?: number,
     "quotaIntrgral"?: null,
-    "restrictState"?: 1001,
+    "restrictState"?: number,
     "restrictedQuantity"?: null,
-    "rounding"?: false,
-    "sellingPrice"?: 313.13,
-    "shelvesStatus"?: 1001,
-    "skuState"?: 1003,
-    "sourceGoodsCode"?: "",
-    "sourceGoodsSkuCode"?: "0",
+    "rounding"?: boolean,
+    "sellingPrice"?: number,
+    "shelvesStatus"?: number,
+    "skuState"?: number,
+    "sourceGoodsCode"?: string,
+    "sourceGoodsSkuCode"?: string,
     "supplyPrice"?: null,
-    "thirdGoodsHasStock"?: false,
+    "thirdGoodsHasStock"?: boolean,
     "upShelvesTime"?: null
 }

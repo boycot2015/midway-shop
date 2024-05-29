@@ -4,7 +4,7 @@
  */
 import { defineStore } from 'pinia';
 import { IResponseData } from '@/@types/utils.request';
-import { GoodsDetail, RateData } from './data.d';
+import { GoodsDetail, RateData } from './data';
 import { queryDetail, getGoodsCommentList } from './service';
 
 export interface IDetailState {
@@ -24,28 +24,26 @@ export const useDetailStore = defineStore('detail', {
     };
   },
   actions: {
-    async getDetail(goodsCode: string) {
-      try {
+    async getDetail(goodsCode: string):Promise<any> {
         this.loading = true;
-        const response: IResponseData<GoodsDetail> = await queryDetail(goodsCode);
+        let response: IResponseData<GoodsDetail> = await queryDetail(goodsCode)
+        .catch((error: any) => {
+            console.log('error useDetailStore getDetail', error);
+        })
         const data = response.data || {} as GoodsDetail;
         if (data) {
           this.goodsData = data;
         }
         this.loading = false;
-      } catch (error: any) {
-        console.log('error useDetailStore getDetail', error);
-      }
     },
-    async getRateData (params: any) {
+    getRateData (params: any) {
         try {
-          this.loading = true;
-          const response: IResponseData<RateData> = await getGoodsCommentList(params);
-          const data = response.data || {} as RateData;
-          if (data) {
-            this.goodsComment = data;
-          }
-          this.loading = false;
+            getGoodsCommentList(params).then((response: IResponseData<RateData>) => {
+              const data = response.data || {} as RateData;
+              if (data) {
+                this.goodsComment = data;
+              }
+          });
         } catch (error: any) {
           console.log('error useDetailStore getRateData', error);
         }

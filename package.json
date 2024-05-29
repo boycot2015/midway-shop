@@ -32,6 +32,7 @@
     "typeorm": "^0.3.20",
     "vite": "^2.9.16",
     "vue": "^3.3.8",
+    "vue-qrcode": "^2.2.2",
     "vue-router": "^4.2.5"
   },
   "devDependencies": {

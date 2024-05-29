@@ -10,16 +10,17 @@ export class HomeController {
   ctx: Context;
 
   @Get('/')
-  @Get('/about')
   @Get('/cart')
-  @Get('/order/*')
   @Get('/login')
   @Get('/detail')
   @Get('/goodsDetail/goodsDetail')
   @Get('/localapi')
   @Get('/goodsList')
-  @Get('/userCenter/*')
   @Get('/customPage')
+  @Get('/about')
+  @Get('/goods/*')
+  @Get('/order/*')
+  @Get('/userCenter/*')
   @Get('/404')
   @ContentType('text/html')
   async home(): Promise<void> {

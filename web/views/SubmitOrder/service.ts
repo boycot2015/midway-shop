@@ -42,4 +42,10 @@ export async function getPayData(data): Promise<any> {
       data,
     });
 }
-// 
+export async function getOrderPayData(data): Promise<any> {
+    return request({
+      url: '/api/order/orderPay',
+      method: 'post',
+      data,
+    });
+}

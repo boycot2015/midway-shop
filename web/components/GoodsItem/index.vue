@@ -6,6 +6,7 @@ import { GoodsItemProps } from "./data.d";
 // const props = defineProps<GoodsItemProps>();
 const props = withDefaults(defineProps<GoodsItemProps>(), {
     border: true,
+    soldOut: false,
     layout: 'vertical',
 })
 </script>
@@ -13,6 +14,7 @@ const props = withDefaults(defineProps<GoodsItemProps>(), {
   <div class="goods-list-item" :class="{[props.size]:props.size, 'horizontal': props.layout==='horizontal', 'border': props.border}" :key="props.goodsCode" @click="props.goodsCode && $router.push(`/goodsDetail/goodsDetail?goodsSkuCode=${props.goodsSkuCode}&goodsCode=${props.goodsCode}`)">
         <div class="goods-list-item-img">
             <el-image :src="props.imgUrl"></el-image>
+            <div v-if="props.soldOut" class="sold-out flex flex-center flex-justify-center"><p>已售罄</p></div>
         </div>
         <div class="goods-list-item-text">
             <slot name="goodsName">
@@ -66,6 +68,18 @@ const props = withDefaults(defineProps<GoodsItemProps>(), {
         height: 192px;
         margin: auto;
         margin-bottom: 10px;
+        position: relative;
+        .sold-out {
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            line-height: 100%;
+            color: var(--color-white);
+            font-size: 16px;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
     }
     &-text {
         text-align: left;

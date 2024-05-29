@@ -50,6 +50,10 @@ const DefaultLayoutRoutes: Array<RouteRecordRaw> = [
   },
   {
     path: '/goodsList',
+    redirect: '/goods/list'
+  },
+  {
+    path: '/goods/list',
     name: 'goodsList',
     meta: {
       title: '商品列表',
@@ -62,11 +66,11 @@ const DefaultLayoutRoutes: Array<RouteRecordRaw> = [
   },
   {
     path: '/goodsDetail/goodsDetail',
-    redirect: '/detail',
+    redirect: '/goods/detail',
   },
   {
-    path: '/detail',
-    name: 'detail',
+    path: '/goods/detail',
+    name: 'GoodsDetail',
     meta: {
       title: '详情',
       hideBreadcrumb: true,
@@ -75,7 +79,7 @@ const DefaultLayoutRoutes: Array<RouteRecordRaw> = [
       navActive: 'about',
     },
     component: () =>
-      import(/* webpackChunkName: "detail" */ '@/views/Detail/index.vue'),
+      import(/* webpackChunkName: "GoodsDetail" */ '@/views/GoodsDetail/index.vue'),
   },
   {
     path: '/localapi',

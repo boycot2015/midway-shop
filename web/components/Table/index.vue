@@ -84,6 +84,7 @@ const onCheckAllChange = (val:boolean) => {
     val && tableRef.value?.toggleAllSelection();
     !val && tableRef.value?.clearSelection();
     if (props.selection) {
+        props.selection.checkAll = val;
         props.selection?.checkAllChange && props.selection?.checkAllChange(val)
     }
 }
@@ -93,9 +94,10 @@ const onSelectionChange = (val) => {
         props.selection?.selectionChange && props.selection?.selectionChange(val)
     }
 }
-const onSelectAll= (val) => {
+const onSelectAll = (val) => {
     if (props.selection) {
         props.selection.checkAll = !!val.length;
+        props.selection.selectedRows = !val ? [] : props.selection.selectedRows;
     }
 }
 defineExpose({

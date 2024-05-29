@@ -43,43 +43,12 @@ export type OrderGoods = {
     "surplusIntegral": 0,
     "target": "",
 }
-export type Package = {
-    "actualQty": 1,
-    "addressId": 419215,
-    "buyerMsg": "",
-    "customerId": 2888888888899354,
-    "deliverContent": "请耐心等待，我们将尽快发货",
-    "deliverWay": 1001,
-    "estimatedDeliveryTime": null,
-    "isAfterSale": false,
-    "isDeleted": null,
-    "memberAccount": "拼团二期A2",
-    "memberId": 672128,
-    "orderCode": "838781864771194880",
-    "orderEntriesVOList": OrderGoods[],
-    "packageCode": "838781864771194880",
-    "packageStatus": 1007,
-    "packageTotalAmount": 0,
-    "packageTotalIntegral": 2200,
-    "parcelConfirmTime": null,
-    "parcelDeliverTime": null,
-    "parcelShipperType": 1002,
-    "parcelSignTime": null,
-    "parentOrderCode": "PO838781864771194880",
-    "remarks": "",
-    "showExpeditedDeliveryBut": true,
-    "soOrderCode": "SO838781864771194880",
-    "supplierCode": "SP180662775562",
-    "supplierId": 27,
-    "supplierName": "南京桂花鸭（集团）有限公司",
-    "supplierOrderCode": "",
-    "syncBatchNo": "",
-    "thirdOrderCode": "",
-    "thirdParentOrderCode": "",
-    "userDeleted": null,
-    "warehouseCode": "0701",
-    "warehouseName": "工厂代发仓",
-    "websiteId": 2888888888890611
+type  OrderNode = {
+    "node": number,
+    "nodeMsg": string,
+    "nodeTime": Date,
+    "orderCode": string,
+    "parentOrderCode": string
 }
 export interface OrderList {
     "activityId": null,
@@ -136,6 +105,47 @@ export interface OrderList {
     packageIndex: number | string
     topRows: number | string
     childRows: number | string
+    orderNodeList?: OrderNode[]
+    receiveMobile?: string
+    buyerMsg?: string
+}
+export interface Package extends OrderList {
+    "actualQty": 1,
+    "addressId": 419215,
+    "buyerMsg": "",
+    "customerId": 2888888888899354,
+    "deliverContent": "请耐心等待，我们将尽快发货",
+    "deliverWay": 1001,
+    "estimatedDeliveryTime": null,
+    "isAfterSale": false,
+    "isDeleted": null,
+    "memberAccount": "拼团二期A2",
+    "memberId": 672128,
+    "orderCode": "838781864771194880",
+    "orderEntriesVOList"?: OrderGoods[],
+    "packageCode": "838781864771194880",
+    "packageStatus": 1007,
+    "packageTotalAmount": 0,
+    "packageTotalIntegral": 2200,
+    "parcelConfirmTime": null,
+    "parcelDeliverTime": null,
+    "parcelShipperType": 1002,
+    "parcelSignTime": null,
+    "parentOrderCode": "PO838781864771194880",
+    "remarks": "",
+    "showExpeditedDeliveryBut": true,
+    "soOrderCode": "SO838781864771194880",
+    "supplierCode": "SP180662775562",
+    "supplierId": 27,
+    "supplierName": "南京桂花鸭（集团）有限公司",
+    "supplierOrderCode": "",
+    "syncBatchNo": "",
+    "thirdOrderCode": "",
+    "thirdParentOrderCode": "",
+    "userDeleted": null,
+    "warehouseCode": "0701",
+    "warehouseName": "工厂代发仓",
+    "websiteId": 2888888888890611
 }
 export interface OrderParams {
     totalPage?:number;

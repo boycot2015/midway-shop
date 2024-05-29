@@ -22,7 +22,7 @@ export class APIController {
   }
   @Get('/getGoodsById')
   async getGoodsById(@Query('goodsCode') goodsCode = '888888888988010') {
-    const user = await this.goodsService.getGoodsById({ goodsCode });
-    return { success: true, message: 'OK', data: user };
+    const data = await this.goodsService.getGoodsById({ goodsCode });
+    return { success: true, message: 'OK', data };
   }
 }

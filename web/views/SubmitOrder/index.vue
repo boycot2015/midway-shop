@@ -1,5 +1,5 @@
 <template>
-    <div class="submit-order">
+    <div class="submit-order" v-loading="dataStore.loading">
         <Header></Header>
         <div class="submit-order-nav">
             <Breadcrumb></Breadcrumb>
