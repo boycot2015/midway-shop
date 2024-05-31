@@ -1,6 +1,4 @@
 
-import { join } from 'path';
-
 <template>
     <div class="cart" v-loading="loading">
         <div class="cart-content w1200">
@@ -10,7 +8,7 @@ import { join } from 'path';
                 <Table
                 class="cart-table"
                 ref="tableRef"
-                v-for="(item, index) in [cartStore.validCartItems, cartStore.invalidCartItems]"
+                v-for="(item, index) in [cartStore.validCartItems, cartStore.invalidCartItems].filter(el => el.length)"
                 :data="item"
                 :key="index"
                 :columns="columns"
@@ -26,7 +24,8 @@ import { join } from 'path';
                         :skuName="row.goodsSkuName"
                         :goodsSkuCode="row.goodsSkuCode"
                         :imgUrl="row.goodsSkuImgUrl"
-                        v-bind={row}>
+                        :soldOut="!row.inStock"
+                        v-bind="row">
                         <template #goodsSpec>
                             <div class="ellipsis" v-if="row.goodsSpecList" :title="row.goodsSpecList.map(el => el.specName + ':'+el.specValue).join(' ')">
                                 <span v-for="item in row.goodsSpecList" :key="item.id">{{ item.specName }}:{{ item.specValue }}</span>
@@ -46,8 +45,8 @@ import { join } from 'path';
                         {{ row.integralPrice * row.quantity }}{{ websiteConfig.websiteUnit }}
                     </template>
                     <template #operate="{row}">
-                        <el-link type="danger" class="mr10">删除</el-link>
-                        <el-link type="danger">移入收藏夹</el-link>
+                        <el-link type="primary" class="mr10">移入收藏夹</el-link>
+                        <el-link type="danger">删除</el-link>
                     </template>
                 </Table>
             </div>
@@ -57,12 +56,12 @@ import { join } from 'path';
                 <div class="action flex flex-justify-between flex-center">
                     <el-checkbox v-model="selection.checkAll" @change="tableRef[0].onCheckAllChange(selection.checkAll)">全选</el-checkbox>
                     <el-link type="danger" :disabled="!selection.selectedRows.length" class="ml20 mr10">删除选择商品</el-link>
-                    <el-link :disabled="!selection.selectedRows.length">移入收藏夹</el-link>
+                    <el-link type="primary" :disabled="!selection.selectedRows.length">移入收藏夹</el-link>
                 </div>
                 <div class="total flex flex-center">
                     <span>共<span>{{ totalQuantity }}</span>件商品，总计：</span>
                     <span class="mr20 color-price">{{ totalAmount }}{{ websiteConfig.websiteUnit }}</span>
-                    <el-button type="danger" :disabled="!totalQuantity" @click="$router.push('/order/submit')">去结算</el-button>
+                    <el-button type="danger" :disabled="!totalQuantity" @click="goSettment">去结算</el-button>
                 </div>
             </div>
         </div>
@@ -71,12 +70,16 @@ import { join } from 'path';
 
 <script setup lang="ts">
 import { computed, ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 import Table from '@/components/Table/index.vue';
 import GoodsItem from '@/components/GoodsItem/index.vue';
 import { useCartStore } from '@/store/cart';
+import { useDataStore as useOrderStore } from '@/views/SubmitOrder/store';
 import { useAppStore } from '@/store/app';
 const cartStore = useCartStore();
+const orderStore = useOrderStore();
 const appStore = useAppStore();
+const router = useRouter();
 const loading = computed(() => cartStore.loading);
 const totalAmount = computed(() => cartStore.totalAmount);
 const totalQuantity = computed(() => cartStore.totalQuantity);
@@ -84,10 +87,10 @@ const websiteConfig = computed(() => appStore.websiteConfig || {}) || {};
 const columns = ref([
     { label: '全选', type: 'selection' },
     { label: '商品名称', prop: 'name', width: 300, slot: true },
-    { label: '价格', prop: 'price', 'class-name': 'bold', slot: true },
-    { label: '数量', prop: 'num', slot: true },
-    { label: '小计', prop: 'amount', 'class-name': 'bold', slot: true },
-    { label: '操作', prop: 'operate', slot: true },
+    { label: '价格', prop: 'price', 'min-width': 180, 'class-name': 'bold', slot: true },
+    { label: '数量', prop: 'num', 'min-width': 200, slot: true },
+    { label: '小计', prop: 'amount', 'min-width': 200, 'class-name': 'bold', slot: true },
+    { label: '操作', prop: 'operate', 'min-width': 160, slot: true },
 ])
 const tableRef = ref();
 const selection = ref({
@@ -98,7 +101,14 @@ const selection = ref({
         cartStore.setSelectedGoodsList(selection);
     }
 })
-
+const goSettment = () => { 
+    orderStore.setData({ goodsList: cartStore.selectedGoodsList.map(el => ({
+        quantity: el.quantity,
+        goodsCode: el.goodsCode,
+        goodsSkuCode: el.goodsSkuCode,
+    }))});
+    router.push('/order/submit')
+}
 onMounted(() => {
     cartStore.getCartData();
 })
@@ -111,6 +121,7 @@ onMounted(() => {
         padding: 20px;
         box-sizing: border-box;
         min-width: 1200px;
+        min-height: calc(100vh - 200px);
         background-color: var(--color-white);
         margin-bottom: 20px;
     }
@@ -138,6 +149,12 @@ onMounted(() => {
         }
         .total {
             height: 100%;
+            .el-button {
+                height: 100%;
+                font-size: 18px;
+                border-radius: 0;
+                width: 150px;
+            }
         }
     }
 }

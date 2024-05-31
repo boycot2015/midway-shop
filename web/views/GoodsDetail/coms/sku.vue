@@ -7,6 +7,8 @@ import { Sku } from '@/@types/goods.d';
 import { useRoute, useRouter } from 'vue-router';
 import { ArrowDown } from '@element-plus/icons-vue'
 import { useAppStore } from '@/store/app';
+import { useDataStore as useOrderStore } from '@/views/SubmitOrder/store';
+const orderStore = useOrderStore();
 const appStore = useAppStore();
 const cartStore = useCartStore();
 appStore.getWebsiteConfig();
@@ -26,23 +28,24 @@ const region = ref({
     cityId: '',
     countyId: ''
 })
-let currentSku = ref(goodsData.value.goodsSkuList?.find(item => item.goodsSkuCode === route.query.goodsSkuCode) || {} as Sku);
+let currentSku = ref(goodsData.value.goodsSkuList?.find(item => item.goodsSkuCode) || {} as Sku)
+currentSku.value.quantity = currentSku.value.minimumOrderQuantity || 1;
 // console.log('router, ctx', goodsData.value, goodsData.value, currentSku);
 const onChangeCarousel = (item, index) => {
     carouselRef.value.setActiveItem(index);
 }
 // 切换sku
 const onChangeSku = (current, index) => {
-    currentSku.value = goodsData.value.goodsSkuList[index] as Sku;
+    currentSku.value = { quantity: currentSku.value.quantity || 1, ...goodsData.value.goodsSkuList[index] as Sku};
 }
 // 添加购物车
 const onAddCart = () => {
-    cartStore.addCart({ quantity: currentSku.value.minimumOrderQuantity || 1, goodsCode: currentSku.value.goodsCode, goodsSkuCode: currentSku.value.goodsSkuCode, integralPrice: currentSku.value.integralPrice });
+    cartStore.addCart({ quantity: currentSku.value.quantity || 1, goodsCode: currentSku.value.goodsCode, goodsSkuCode: currentSku.value.goodsSkuCode, integralPrice: currentSku.value.integralPrice });
 }
-// 立即购买
+// 立即兑换
 const onBuy = () => {
-    cartStore.setSelectedGoodsList([{ quantity: currentSku.value.minimumOrderQuantity || 1, goodsCode: currentSku.value.goodsCode, goodsSkuCode: currentSku.value.goodsSkuCode,integralPrice: 0, }]);
-    router.push({ path: '/order/submit' });
+    orderStore.setData({ goodsList: [{ quantity: currentSku.value.quantity || 1, goodsCode: currentSku.value.goodsCode, goodsSkuCode: currentSku.value.goodsSkuCode,integralPrice: 0, }]});
+    router.push('/order/submit')
 }
 </script>
 <template>
@@ -113,12 +116,12 @@ const onBuy = () => {
                   </el-button>
                   </el-form-item>
                   <el-form-item label="数量：">
-                      <el-input-number v-model="currentSku.minimumOrderQuantity" :step="1" step-strictly />
+                      <el-input-number v-model="currentSku.quantity" :step="1" :min="currentSku.minimumOrderQuantity" :max="999" step-strictly />
                   </el-form-item>
                   <el-form-item>
                       <div class="actions flex" style="width: 100%;">
                           <el-button size="large" @click="onAddCart">加入购物车</el-button>
-                          <el-button size="large" type="primary" @click="onBuy">立即购买</el-button>
+                          <el-button size="large" type="primary" @click="onBuy">立即兑换</el-button>
                           <el-button class="star" size="large">
                               <el-rate v-model="currentSku.minimumOrderQuantity" :max="1"></el-rate>
                               收藏

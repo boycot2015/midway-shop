@@ -1,10 +1,10 @@
 <template>
-    <div class="submit-order" v-loading="dataStore.loading">
+    <div class="submit-order">
         <Header></Header>
         <div class="submit-order-nav">
             <Breadcrumb></Breadcrumb>
         </div>
-        <div class="w1200 submit-order-content">
+        <div class="w1200 submit-order-content" v-loading="dataStore.loading">
             <router-view></router-view>
         </div>
     </div>

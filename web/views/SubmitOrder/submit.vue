@@ -14,27 +14,18 @@ export default defineComponent({
 })
 </script>
 <script setup lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
-import { useCartStore } from '@/store/cart';
 import { useDataStore } from './store';
 import Address from './coms/Address.vue';
 import GoodsList from './coms/GoodsList.vue';
 import Pay from './coms/Pay.vue';
 
 const route = useRoute();
-const cartStore = useCartStore();
 const dataStore = useDataStore();
-if (route.query.goodsSkuCode) {
-    dataStore.setData();
-} else {
-    dataStore.setData({ goodsList: cartStore.selectedGoodsList.map(el => ({
-        quantity: el.quantity,
-        goodsCode: el.goodsCode,
-        goodsSkuCode: el.goodsSkuCode,
-    }))});
-}
-dataStore.getData(route.query.goodsSkuCode as string);
+onMounted(() => {
+    dataStore.getData(route.query.goodsSkuCode as string);
+})
 </script>
 <style lang="scss" scoped>
 // .user-main-right {

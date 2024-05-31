@@ -121,7 +121,7 @@ const customCodeMessage: ICodeMessage = {
  * @description: 定义服务端状态码对应内容信息
  */
 const serverCodeMessage: ICodeMessage = {
-  200: '服务器成功返回请求的数据',
+  200: '',
   400: 'Bad Request',
   401: 'Unauthorized',
   403: 'Forbidden',
@@ -175,7 +175,7 @@ const errorHandler = (error: any) => {
   } else if (response && response.status) {
     const errorText = serverCodeMessage[response.status] || response.statusText;
     const { status, request } = response;
-    if (typeof window === 'object') {
+    if (typeof window === 'object' && status !== 200) {
       // alert(`请求错误 ${status}: ${request.responseURL}\n${errorText}`);
       ElMessage.warning(
         `请求错误 ${status}: ${request.responseURL}\n${errorText}`
@@ -253,7 +253,7 @@ export class Request {
         if (code !== ResultCodeEnum.SUCCESS&&code !== ResultCodeEnum.SUCCESS_CODE&&!success) {
           return Promise.reject({
             response,
-            message: 'CustomError',
+            message: response.data.message || response.data.msg || 'CustomeError',
           });
         }
 

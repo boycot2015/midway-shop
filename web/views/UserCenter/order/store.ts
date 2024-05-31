@@ -4,10 +4,12 @@
  */
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
+import { useRouter, Router } from 'vue-router';
 import { IResponseData } from '@/@types/utils.request';
 import { OrderList, OrderParams, Package } from './data';
 import { queryData, queryDetailData } from './service';
-import { Pagination } from '@/@types/page'
+import { Pagination } from '@/@types/page';
+import { useDataStore as useSubmitStore } from '@/views/SubmitOrder/store';
 
 export interface IDataState {
   loading: boolean;
@@ -15,8 +17,13 @@ export interface IDataState {
   params: OrderParams;
   pageData: Pagination;
   detail: OrderList;
+  router: Router;
 }
-
+export const payWay = {
+    1: '余额',
+    2: '余额+现金',
+    3: '现金',
+}
 export const tabs = ref([
     { title: '全部订单', value: '0', type: '' },
     { title: '待支付', value: '1001', type: 'danger' },
@@ -48,6 +55,7 @@ tabs.value.filter(el => !!+el.value).map(el => {
     displayOrderStatus.value[el.value] = el.title
     displayOrderStatusType.value[el.value] = el.type
 })
+
 export const useDataStore = defineStore('order', {
   state(): IDataState {
     return {
@@ -62,7 +70,8 @@ export const useDataStore = defineStore('order', {
         totalPage: 0
       },
       list: [],
-      detail: {} as OrderList
+      detail: {} as OrderList,
+      router: useRouter()
     };
   },
   actions: {
@@ -75,8 +84,6 @@ export const useDataStore = defineStore('order', {
                 this.pageData[key] = val[key]
             }
         }
-        console.log(this.params, 'this.params');
-        
         this.getData()
     },
     async getData() {
@@ -109,6 +116,7 @@ export const useDataStore = defineStore('order', {
                                 packageIndex,
                                 topSpanIndex: spanIndex,
                                 topRows: totalRows,
+                                orderEntriesVOList: packageItem.orderEntriesVOList,
                                 childRows: packageItem?.orderEntriesVOList?.length || 0,
                                 package: packageItem,
                                 orderGoods
@@ -122,6 +130,7 @@ export const useDataStore = defineStore('order', {
                     orderEntriesVOList.map((orderGoods, index) => {
                         list.push({
                             ...el,
+                            orderEntriesVOList,
                             topSpanIndex: index,
                             topRows: orderEntriesVOList.length,
                             spanIndex: index,
@@ -146,6 +155,24 @@ export const useDataStore = defineStore('order', {
         } catch (error: any) {
           console.log('error useDataStore getData', error);
         }
-      },
+    },
+    buyAgain (row:any) {
+        const submitStore = useSubmitStore();
+        submitStore.setData({
+            goodsList: row.orderEntriesVOList?.map(el => ({
+                quantity: el.actualQty,
+                goodsCode: el.goodsCode,
+                goodsSkuCode: el.goodsSkuCode
+            }))
+        }).then(() => {
+            this.router.push({
+                path: '/order/submit',
+                query: {
+                    orderCode: row.package?.orderCode||row.orderCode,
+                    soOrderCode: row.soOrderCode
+                }
+            })
+        })
+    }
   },
 });

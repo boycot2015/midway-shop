@@ -25,11 +25,12 @@
             sizeChange: (val) => store.setParams({pageSize: val}),
             ...store.pageData
         }"
-        :selection="selection"
+        :selection="null"
         >
             <template #soOrderCode="{row}">
                 {{ row.soOrderCode }}
                 <el-link :underline="false" :type="displayOrderStatusType[row.displayOrderStatus]">({{displayOrderStatus[row.displayOrderStatus]}})</el-link>
+                <p class="flex flex-center" style="font-size: 12px;" v-if="row.displayOrderStatus===1001">还剩：<el-countdown value-style="color: var(--color-price);font-size: 12px;" format="HH时:mm分:ss秒" :value="new Date(row.createTime).getTime() + 1000 * 60 * 60 * 24" /></p>
             </template>
             <template #sku="{row}">
                 <div class="sku-box flex">
@@ -68,9 +69,9 @@
                     <el-link type="primary">查看物流</el-link>
                  </template>
                  <el-link type="primary" v-if="row.displayOrderStatus===1001" @click="$router.push('/order/pay?orderCode='+row.orderCode)">去支付</el-link>
-                <el-link type="danger" v-if="row.displayOrderStatus===1001">取消订单</el-link>
-                <el-link type="danger" v-if="row.displayOrderStatus===1005">删除订单</el-link>
-                <el-link  type="primary" v-if="row.displayOrderStatus===1004||row.displayOrderStatus===1005">再来一单</el-link>
+                <el-link type="primary" v-if="row.displayOrderStatus===1001">取消订单</el-link>
+                <el-link type="primary" v-if="row.displayOrderStatus===1005">删除订单</el-link>
+                <el-link  type="primary" v-if="row.displayOrderStatus===1004||row.displayOrderStatus===1005" @click="store.buyAgain(row)">再来一单</el-link>
                 <el-link type="primary" @click="$router.push({path:'/userCenter/order/detail', query:{orderCode:row.orderCode, soOrderCode:row.soOrderCode}})">查看详情</el-link>
             </template>
         </Table>
@@ -113,13 +114,13 @@ const tableRef = ref();
 const loading = computed(() => store.loading);
 
 const columns = ref([
-    { label: '全选', width: 40, type: 'selection', 'reserve-selection': true, prop: 'index', fixed: 'left' },
-    { label: '订单号', minWidth: 120, prop: 'soOrderCode', slot: true },
+    // { label: '全选', width: 40, type: 'selection', 'reserve-selection': true, prop: 'index', fixed: 'left' },
+    { label: '订单号', minWidth: 160, prop: 'soOrderCode', slot: true },
     { label: '包裹号', minWidth: 120, prop: 'packageCode', slot: true },
     { label: '商品', minWidth: 240, prop: 'sku', slot: true },
     { label: '订单总额', minWidth: 150, align: 'left', prop: 'amount', 'class-name': 'bold', slot: true },
     { label: '收货人', minWidth: 100, align: 'left', prop: 'receiveName' },
-    { label: '状态', minWidth: 100, align: 'left', prop: 'displayOrderStatus', slot: true },
+    { label: '状态', minWidth: 80, align: 'left', prop: 'displayOrderStatus', slot: true },
     { label: '操作', fixed: 'right', width: 80, align: 'left', prop: 'operate', slot: true },
 ])
 
@@ -147,7 +148,7 @@ const objectSpanMethod = ({
   rowIndex,
   columnIndex,
 }: SpanMethodProps) => {
-    if (columnIndex !==3 && columnIndex !== 1) {
+    if (columnIndex !==2 && columnIndex !== 0) {
         if (row.spanIndex % row.childRows === 0) {
             return {
                 rowspan: row.childRows,
@@ -159,7 +160,7 @@ const objectSpanMethod = ({
             colspan: 0,
         }
     }
-    if (columnIndex === 1) {
+    if (columnIndex === 0) {
         if (row.topSpanIndex % row.topRows === 0) {
             return {
                 rowspan: row.topRows,

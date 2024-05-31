@@ -131,10 +131,10 @@ a:hover {
     margin: 0;
 }
 .color-primary {
-    color: var(--color-primary);
+    color: var(--color-primary) !important;
 }
 .color-price {
-    color: var(--color-price);
+    color: var(--color-price)!important;
 }
 .bold {
     font-weight: bold;

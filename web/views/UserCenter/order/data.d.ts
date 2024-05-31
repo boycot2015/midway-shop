@@ -59,7 +59,7 @@ export interface OrderList {
     "deliveOrderMo": "",
     "deliverCompany": "",
     "deliverTime": null,
-    "displayOrderStatus": 1002,
+    "displayOrderStatus": number,
     "estimatedDeliveryTime": null,
     "groupId": null,
     "id": 441253,
@@ -108,6 +108,7 @@ export interface OrderList {
     orderNodeList?: OrderNode[]
     receiveMobile?: string
     buyerMsg?: string
+    payWayStr?: string
 }
 export interface Package extends OrderList {
     "actualQty": 1,

@@ -12,6 +12,7 @@ let key = ref('')
 <template>
     <div class="nav-bar">
         <el-row class="w1200">
+            <el-col :span="12"></el-col>
             <el-col :span="12">
                 <nav>
                     <router-link to="/" :class="{'active': meta.navActive === 'home'}">首页</router-link><el-divider direction="vertical" />
@@ -19,7 +20,6 @@ let key = ref('')
                     <router-link :to="{path:'/localapi', query: {'uid':10}}" :class="{'active': meta.navActive === 'localapi'}">个人中心</router-link>
                 </nav>
             </el-col>
-            <el-col :span="12"></el-col>
         </el-row>
     </div>
 </template>

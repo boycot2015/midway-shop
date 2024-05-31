@@ -20,6 +20,7 @@ export interface IResponseData<T = any> {
   data: T;
   success?: boolean;
   msg?: string;
+  message?: string;
 }
 
 /**

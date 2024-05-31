@@ -30,6 +30,7 @@ watch(route, (val) => {
     dataStore.getData({ currentPage: 1, ...val.query } as GoodsParams)
 })
 const loading = computed(() => dataStore.loading)
+const pageLoading = computed(() => dataStore.pageLoading)
 const pageData = computed(() => dataStore.pageData)
 const noMore = computed(() => pageData.value.currentPage >= pageData.value.totalPage)
 const queryForm = computed(()=> dataStore.$state.query);
@@ -51,8 +52,8 @@ const onStockChange = () => {
                 <el-checkbox label="仅显示有货" v-model="queryForm.onlyInStock" @change="onStockChange"></el-checkbox>
             </el-form-item>
         </el-form>
-        <div class="goods-list w1200">
-            <template v-if="list && list.length" v-loading="loading">
+        <div class="goods-list w1200" v-loading="pageLoading">
+            <template v-if="list && list.length">
                 <GoodsItem v-bind="item" v-for="item in list" :key="item.goodsSkuCode">
                     <template #action>
                       <div class="flex flex-end">
@@ -67,7 +68,7 @@ const onStockChange = () => {
                 </div>
             </template>
       </div>
-      <div class="tc flex-1" v-if="list.length > 20" style="width: 100%;">
+      <div class="tc flex-1" v-if="list.length > 20||loading" style="width: 100%;">
           <p v-if="loading">加载中...</p>
           <p v-if="noMore">到底了~</p>
       </div>

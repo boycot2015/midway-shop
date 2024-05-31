@@ -111,6 +111,8 @@ import { Sku } from '@/@types/goods';
                         }
                         this.payIntegral = this.totalPayIntegral;
                         this.payCash = ((this.totalIntegralPrice - this.totalPayIntegral) * 1 / this.integralRatio).toFixed(2) || 0
+                   } else {
+                     ElMessage.error(response.data as string || response.message);
                    }
                    this.loading = false;
                 });
@@ -121,12 +123,12 @@ import { Sku } from '@/@types/goods';
        }
      },
      setData(params?: any) {
-         console.log(params, 'params[key]');
         for (const key in params) {
             if (Object.prototype.hasOwnProperty.call(this, key)) {
                 this[key] = params[key];
             }
         }
+        return Promise.resolve(params)
       },
       setPrice (val) {
         this.payCash = ((this.totalIntegralPrice - this.payIntegral) * 1 / this.integralRatio).toFixed(2) || 0
@@ -163,10 +165,13 @@ import { Sku } from '@/@types/goods';
         });
       },
       getOrderPayData (params: PayParams) {
-        getOrderPayData(params).then((response:IResponseData<string>) => {
+        this.loading = true;
+        return getOrderPayData(params).then((response:IResponseData<string>) => {
             if (response.success && response.data) {
                 this.payData.qrCode = response.data || '';
             }
+            this.loading = false;
+            return response;
         });
       },
       
