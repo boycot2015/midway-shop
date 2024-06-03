@@ -51,11 +51,4 @@ $ pnpm prune --production  # 移除开发依赖
 $ pnpm start # 启动项目，对应的 pm2 命令为: NODE_ENV=production pm2 start ./bootstrap.js --name midway_vue3_ssr -i 4
 ```
 
-## 捐赠
-
-如果你觉得这个项目帮助到了你，请帮助点击 Star，你也可以请作者喝咖啡表示鼓励.
-
-**ALIPAY**             |  **WECHAT**
-:-------------------------:|:-------------------------:
-![Alipay](http://uploads.liqingsong.cc/20210430/f62d2436-8d92-407d-977f-35f1e4b891fc.png)  |  ![Wechat](http://uploads.liqingsong.cc/20210430/3e24efa9-8e79-4606-9bd9-8215ce1235ac.png)
 
