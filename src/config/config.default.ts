@@ -25,9 +25,9 @@ export default {
         // entities: [],
 
         // 或者扫描形式
-        entities: [
-          '**/entity/*.entity{.ts,.js}'
-        ]
+        // entities: [
+        //   '**/entity/*.entity{.ts,.js}'
+        // ]
       }
     }
   },

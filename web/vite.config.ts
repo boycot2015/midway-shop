@@ -37,6 +37,7 @@ export default defineConfig((/* { mode, command } */) => {
         '~': resolve(__dirname, '../'),
         '@': resolve(__dirname, './'),
       },
+      dedupe: ['pinia']
     },
     server: {
       proxy: {
@@ -60,6 +61,11 @@ export default defineConfig((/* { mode, command } */) => {
     define: {
         __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: true,
     },
+    // build: {
+    //     rollupOptions: {
+    //         external: ['vue', 'element-plus', 'pinia', 'pinia-plugin-persistedstate']
+    //     }
+    // }
   };
 
   /* 不同端配置 S */

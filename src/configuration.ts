@@ -2,11 +2,11 @@ import { Configuration, App, IMidwayContainer } from '@midwayjs/core';
 import * as koa from '@midwayjs/koa';
 import * as validate from '@midwayjs/validate';
 import * as info from '@midwayjs/info';
-import { join } from 'path';
 import * as orm from '@midwayjs/typeorm';
 import * as axios from '@midwayjs/axios';
 import * as apiConfig from './config/config.api';
 import * as staticFile from '@midwayjs/static-file';
+import * as DefaultConfig from './config/config.default';
 import { DefaultErrorFilter } from './filter/default.filter';
 import { NotFoundFilter } from './filter/notfound.filter';
 import { ReportMiddleware } from './middleware/report.middleware';
@@ -25,7 +25,9 @@ import { ReportMiddleware } from './middleware/report.middleware';
       enabledEnvironment: ['local'],
     },
   ],
-  importConfigs: [join(__dirname, './config')],
+  importConfigs: [{
+    default: DefaultConfig
+  }],
 })
 export class MainConfiguration {
   @App('koa')

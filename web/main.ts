@@ -16,7 +16,7 @@ import 'normalize.css';
 
 // 引入 ElementUI
 import ElementPlus from 'element-plus';
-import zhCn from 'element-plus/es/locale/lang/zh-cn'
+// import zhCn from 'element-plus/es/locale/lang/zh-cn'
 
 export function createApp(routerType: RouterType) {
   const app = createSSRApp(App);
@@ -26,7 +26,7 @@ export function createApp(routerType: RouterType) {
   app.use(router);
   app.use(pinia);
   app.use(ElementPlus, {
-    locale: zhCn,
+    // locale: zhCn,
   })
   library.add(fas);
   return { app, router, pinia };

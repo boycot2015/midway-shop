@@ -12,9 +12,9 @@
 <script lang="ts">
 export default defineComponent({
     name: 'SubmitOrder',
-    async asyncData({store, route, router, ctx}) {
-        // const query = route.query || {};
-    }
+    // async asyncData({store, route, router, ctx}) {
+    //     // const query = route.query || {};
+    // }
 })
 </script>
 <script setup lang="ts">

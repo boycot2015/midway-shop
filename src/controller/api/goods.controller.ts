@@ -2,7 +2,7 @@ import { Inject, Controller, Get, Query } from '@midwayjs/core';
 import { GoodsService } from '../../service/goods.service';
 import { UserService } from '../../service/user.service';
 @Controller('/api/goods')
-export class APIController {
+export class APIGoodsController {
 
   @Inject()
   goodsService: GoodsService;

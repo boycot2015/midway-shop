@@ -3,9 +3,9 @@ import { defineComponent, computed } from 'vue'
 import { useAppStore } from "@/store/app";
 export default defineComponent({
     name: 'Home',
-  async asyncData({store, route, router, ctx}) {
-    const query = route.query || {};
-  },
+//   async asyncData({store, route, router, ctx}) {
+//     const query = route.query || {};
+//   },
   seo({store}) {
    const dataStore = useAppStore(store);
    return {

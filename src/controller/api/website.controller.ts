@@ -3,7 +3,7 @@ import { WebsiteService } from '../../service/website.service';
 import { HttpService } from '@midwayjs/axios';
 import { Context } from '@midwayjs/koa';
 @Controller('/api/website')
-export class APIController {
+export class APIWebsiteController {
   @Inject()
   ctx: Context;
   @Inject()
@@ -30,14 +30,14 @@ export class APIController {
     const result = await this.websiteService.queryGoodsInfoBySkuList({ goodsSkuCodeList });
     return { ...result };
   }
-  @Get('/*')
-  async getApiData(@Query() params:any) {
-    const result = await this.httpService.get(this.ctx.baseApiUrl + this.ctx.url, { params });
-    return { ...result.data };
-  }
-  @Post('/*')
-  async getApiPostData(@Body() params:any) {
-    const result = await this.httpService.post(this.ctx.baseApiUrl + this.ctx.url, params);
-    return { ...result.data };
-  }
+//   @Get('/*')
+//   async getApiData(@Query() params:any) {
+//     const result = await this.httpService.get(this.ctx.baseApiUrl + this.ctx.url, { params });
+//     return { ...result.data };
+//   }
+//   @Post('/*')
+//   async getApiPostData(@Body() params:any) {
+//     const result = await this.httpService.post(this.ctx.baseApiUrl + this.ctx.url, params);
+//     return { ...result.data };
+//   }
 }

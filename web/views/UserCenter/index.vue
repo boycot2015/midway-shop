@@ -16,9 +16,9 @@
 </template>
 <script lang="ts">
 export default defineComponent({
-    async asyncData({store, route, router, ctx}) {
-        // const query = route.query || {};
-  },
+//     async asyncData({store, route, router, ctx}) {
+//         // const query = route.query || {};
+//   },
   seo({store}) {
    const userStore = useUserStore(store);
    return {

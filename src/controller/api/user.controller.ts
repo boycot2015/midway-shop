@@ -3,7 +3,7 @@ import { Context } from '@midwayjs/koa';
 import { UserService } from '../../service/user.service';
 
 @Controller('/api/user')
-export class APIController {
+export class APIUserController {
   @Inject()
   ctx: Context;
 
