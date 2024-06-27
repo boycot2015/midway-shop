@@ -13,10 +13,10 @@ export default {
          * 单数据库实例
          */
         type: 'mysql',
-        host: '43.138.211.108',
+        host: 'mysql.sqlpub.com',
         port: 3306,
-        username: 'root',
-        password: 'zch17184',
+        username: 'boycot',
+        password: 'VCZBHeSHbiTAxFkV',
         database: 'boycot',
         synchronize: false,     // 如果第一次使用，不存在表，有同步的需求可以写 true，注意会丢数据
         logging: false,
