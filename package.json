@@ -60,7 +60,7 @@
     "start": "cross-env NODE_ENV=production node ./bootstrap.js",
     "dev": "cross-env NODE_ENV=local midway-bin dev --ts",
     "build": "pnpm run clean && pnpm run build:midway && pnpm run build:web",
-    "build:midway": "midway-bin build -c",
+    "build:midway": "midway-bin build -c ",
     "bundle": "bundle && npm run build && ncc build bootstrap.js -o build",
     "bundle_start": "cross-env NODE_ENV=production node ./build/index.js",
     "build:web": "pnpm run build:web:client && pnpm run build:web:server",
