@@ -3,14 +3,14 @@
     "name": "midway-shop",
     "builds": [
         {
-            "src": "./bootstrap.js",
-            "use": "@vercel/node"
+            "src": "bootstrap.js",
+            "use": "@vercel/ncc"
         }
     ],
     "routes": [
         {
             "src": "/(.*)",
-            "dest": "./bootstrap.js",
+            "dest": "bootstrap.js",
             "methods": ["GET", "POST", "PUT", "PATCH", "DELETE"]
         }
     ]
