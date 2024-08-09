@@ -4,20 +4,21 @@ import { useAppStore } from '@/store/app';
 import { useUserStore } from '@/store/user';
 import { useCartStore } from '@/store/cart';
 export default defineComponent({
-    async asyncData({store, route, router, ctx}) {
-        // const query = route.query || {};
+    async asyncData({ store, route, router, ctx }) {
+        const query = route.query || {};
         const appStore = useAppStore();
-        if (appStore.websitePage.websitePcFixedList) {
+        if (appStore.websitePage && appStore.websitePage.websitePcFixedList) {
             return
         }
         await appStore.getWebsiteConfig();
-  },
-  seo({store}) {
-//    const dataStore = useAppStore(store);
-   return {
-      title: '首页',
-   }
-  }
+        await appStore.getWebsiteDecoration({ ...query, pageType: 1001 });
+    },
+    seo({ store }) {
+        //    const dataStore = useAppStore(store);
+        return {
+            title: '首页',
+        }
+    }
 })
 </script>
 <script lang="ts" setup>
@@ -51,13 +52,14 @@ const SSR = import.meta.env.SSR;
 
 <style lang="scss">
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  background-color: var(--color-bg);
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
+    background-color: var(--color-bg);
 }
+
 .layout-content {
     min-height: calc(100vh - 182px);
     background-color: var(--color-bg);

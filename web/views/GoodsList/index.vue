@@ -6,17 +6,17 @@ import { GoodsParams } from "./data.d";
 import GoodsItem from '@/components/GoodsItem/index.vue';
 import { ShoppingCart } from '@element-plus/icons-vue';
 export default defineComponent({
-  async asyncData({store, route, router, ctx}) {
-    const query = route.query || {};
-    const dataStore = useDataStore(store);
-    await dataStore.getData({ currentPage: 1, ...query } as GoodsParams);
-  },
-  seo({store}) {
-   const dataStore = useDataStore(store);
-   return {
-      title: '商品列表',
-   }
-  }
+    async asyncData({ store, route, router, ctx }) {
+        const query = route.query || {};
+        const dataStore = useDataStore(store);
+        await dataStore.getData({ currentPage: 1, ...query } as GoodsParams);
+    },
+    seo({ store }) {
+        const dataStore = useDataStore(store);
+        return {
+            title: '商品列表',
+        }
+    }
 })
 </script>
 <script lang="ts" setup>
@@ -33,8 +33,8 @@ const loading = computed(() => dataStore.loading)
 const pageLoading = computed(() => dataStore.pageLoading)
 const pageData = computed(() => dataStore.pageData)
 const noMore = computed(() => pageData.value.currentPage >= pageData.value.totalPage)
-const queryForm = computed(()=> dataStore.$state.query);
-const list = computed(()=> dataStore.$state.goodsList);
+const queryForm = computed(() => dataStore.$state.query);
+const list = computed(() => dataStore.$state.goodsList);
 const load = async () => {
     if (pageData.value.totalPage <= 2) return
     pageData.value.currentPage += 1;
@@ -56,10 +56,14 @@ const onStockChange = () => {
             <template v-if="list && list.length">
                 <GoodsItem v-bind="item" v-for="item in list" :key="item.goodsSkuCode">
                     <template #action>
-                      <div class="flex flex-end">
-                          <el-icon size="20" @click.stop="() => cartStore.addCart({quantity: 1, goodsCode: item.goodsCode, goodsSkuCode: item.goodsSkuCode, integralPrice: item.integralPrice || 0})" style="color:var(--color-primary)"><ShoppingCart /></el-icon>
-                      </div>
-                  </template>
+                        <div class="flex flex-end">
+                            <el-icon size="20"
+                                @click.stop="() => cartStore.addCart({ quantity: 1, goodsCode: item.goodsCode, goodsSkuCode: item.goodsSkuCode, integralPrice: item.integralPrice || 0 })"
+                                style="color:var(--color-primary)">
+                                <ShoppingCart />
+                            </el-icon>
+                        </div>
+                    </template>
                 </GoodsItem>
             </template>
             <template v-else>
@@ -67,11 +71,11 @@ const onStockChange = () => {
                     <p>暂无数据~</p>
                 </div>
             </template>
-      </div>
-      <div class="tc flex-1" v-if="list.length > 20||loading" style="width: 100%;">
-          <p v-if="loading">加载中...</p>
-          <p v-if="noMore">到底了~</p>
-      </div>
+        </div>
+        <div class="tc flex-1" v-if="list.length > 20 || loading" style="width: 100%;">
+            <p v-if="loading && !noMore">加载中...</p>
+            <p v-if="!loading && noMore">--------------我是有底线的--------------</p>
+        </div>
     </div>
 </template>
 <style lang="scss" scoped>
@@ -79,6 +83,7 @@ const onStockChange = () => {
     display: flex;
     flex-wrap: wrap;
     margin-top: 16px;
+
     .empty-block {
         width: 100%;
         min-height: 200px;

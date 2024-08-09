@@ -46,7 +46,7 @@ import { Sku } from '@/@types/goods';
     "totalSellingPrice": 0
 }
  
- export const useDataStore = defineStore('submitOrderData', {
+ export const useDataStore = defineStore('submitOrderStore', {
    state(): IDataState {
      return {
         loading: false,

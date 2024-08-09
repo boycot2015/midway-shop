@@ -21,17 +21,19 @@ export const useDataStore = defineStore('CustomPage', {
     async getData(params: GoodsParams): Promise<GoodsParams[]> {
       try {
         this.loading = true;
-        const response: IResponseData<GoodsItemProps[]> = await queryData(params);
+        const response: IResponseData<GoodsItemProps[]> = await queryData(
+          params
+        );
         const data = response.data || [];
         if (data) {
-          return Promise.resolve(data)
+          return Promise.resolve(data);
         }
         this.loading = false;
       } catch (error: any) {
         // console.log('error useDataStore getData', error);
-        return Promise.resolve([])
+        return Promise.resolve([]);
       }
-      return Promise.resolve([])
+      return Promise.resolve([]);
     },
   },
 });

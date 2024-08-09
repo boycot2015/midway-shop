@@ -18,35 +18,38 @@ export const useDetailStore = defineStore('detail', {
     return {
       loading: false,
       goodsData: {
-        goodsSkuList: []
+        goodsSkuList: [],
       },
-      goodsComment: {}
+      goodsComment: {},
     };
   },
   actions: {
-    async getDetail(goodsCode: string):Promise<any> {
-        this.loading = true;
-        let response: IResponseData<GoodsDetail> = await queryDetail(goodsCode)
-        .catch((error: any) => {
-            console.log('error useDetailStore getDetail', error);
-        })
-        const data = response.data || {} as GoodsDetail;
-        if (data) {
-          this.goodsData = data;
-        }
-        this.loading = false;
+    async getDetail(goodsCode: string): Promise<any> {
+      this.loading = true;
+      const response: IResponseData<GoodsDetail> = await queryDetail(
+        goodsCode
+      ).catch((error: any) => {
+        console.log('error useDetailStore getDetail', error);
+      });
+      const data = response.data || ({} as GoodsDetail);
+      if (data) {
+        this.goodsData = data;
+      }
+      this.loading = false;
     },
-    getRateData (params: any) {
-        try {
-            getGoodsCommentList(params).then((response: IResponseData<RateData>) => {
-              const data = response.data || {} as RateData;
-              if (data) {
-                this.goodsComment = data;
-              }
-          });
-        } catch (error: any) {
-          console.log('error useDetailStore getRateData', error);
-        }
+    getRateData(params: any) {
+      try {
+        getGoodsCommentList(params).then(
+          (response: IResponseData<RateData>) => {
+            const data = response.data || ({} as RateData);
+            if (data) {
+              this.goodsComment = data;
+            }
+          }
+        );
+      } catch (error: any) {
+        console.log('error useDetailStore getRateData', error);
+      }
     },
   },
 });

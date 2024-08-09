@@ -30,16 +30,21 @@ watch(route, (val) => {
             </el-col>
             <el-col :span="12">
                 <div class="text-align-center">
-                    <el-input size="large" v-model="key" placeholder="输入关键词" style="width: 100%;margin-right: 16px;" clearable>
-                    <template #append>
-                        <el-button size="large" type="primary" @click="$router.push({path: '/goodsList', query: { goodsName: key }})">搜索</el-button>
-                    </template>
+                    <el-input size="large" v-model="key" placeholder="输入关键词" style="width: 100%;margin-right: 16px;"
+                        clearable>
+                        <template #append>
+                            <el-button size="large" type="primary"
+                                @click="$router.push({ path: '/goodsList', query: key ? { goodsName: key } : {} })">搜索</el-button>
+                        </template>
                     </el-input>
                 </div>
             </el-col>
             <el-col :span="6">
                 <div class="text-align-center shopping-cart">
-                    <el-badge :value="cartStore.totalCount" :hidden="!cartStore.totalCount"><el-button size="large" type="primary" @click="router.push('/cart')"><el-icon><ShoppingCart /></el-icon>购物车</el-button></el-badge>
+                    <el-badge :value="cartStore.totalCount" :hidden="!cartStore.totalCount"><el-button size="large"
+                            type="primary" @click="router.push('/cart')"><el-icon>
+                                <ShoppingCart />
+                            </el-icon>购物车</el-button></el-badge>
                 </div>
             </el-col>
         </el-row>
@@ -51,10 +56,12 @@ watch(route, (val) => {
     padding: 20px 0;
     background-color: var(--color-white);
     min-width: 1200px;
+
     .logo {
         cursor: pointer;
         height: 64px;
     }
+
     .shopping-cart .el-icon {
         margin-right: 10px;
     }

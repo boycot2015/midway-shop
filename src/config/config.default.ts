@@ -1,5 +1,5 @@
 import { MidwayConfig } from '@midwayjs/core';
-
+const domans = ['cs0188', 'DELL', 'dell', 'ptsc39'];
 export default {
   // use for cookie sign key, should change to your own and keep security
   keys: '123456789',
@@ -18,7 +18,7 @@ export default {
         username: 'boycot',
         password: 'VCZBHeSHbiTAxFkV',
         database: 'boycot',
-        synchronize: false,     // 如果第一次使用，不存在表，有同步的需求可以写 true，注意会丢数据
+        synchronize: false, // 如果第一次使用，不存在表，有同步的需求可以写 true，注意会丢数据
         logging: false,
 
         // 配置实体模型
@@ -28,8 +28,8 @@ export default {
         // entities: [
         //   '**/entity/*.entity{.ts,.js}'
         // ]
-      }
-    }
+      },
+    },
   },
   axios: {
     default: {
@@ -42,7 +42,8 @@ export default {
         // `headers` are custom headers to be sent
         headers: {
           'X-Requested-With': 'XMLHttpRequest',
-          'Website-Path': 'ptsc39' // cs0188 DELL ptsc39
+          'Website-Path':
+            domans[Math.floor(Math.random() * (domans.length - 1))], // cs0188 DELL dell ptsc39
         },
         timeout: 15000, // default is `0` (no timeout)
 
@@ -50,6 +51,6 @@ export default {
         // should be made using credentials
         withCredentials: false, // default
       },
-    }
+    },
   },
 } as MidwayConfig;

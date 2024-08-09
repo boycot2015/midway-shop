@@ -1,8 +1,7 @@
 import { createSSRApp } from 'vue';
 import App from '@/App.vue';
 import { createRouter } from '@/router';
-import { createPinia } from 'pinia';
-import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
+import store from './store';
 
 // vue-fontawesome
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -21,13 +20,12 @@ import ElementPlus from 'element-plus';
 export function createApp(routerType: RouterType) {
   const app = createSSRApp(App);
   const router = createRouter(routerType);
-  const pinia = createPinia();
-  pinia.use(piniaPluginPersistedstate);
+//   app.use(pinia);
+  app.use(store);
   app.use(router);
-  app.use(pinia);
   app.use(ElementPlus, {
     // locale: zhCn,
   })
   library.add(fas);
-  return { app, router, pinia };
+  return { app, router, pinia: store };
 }

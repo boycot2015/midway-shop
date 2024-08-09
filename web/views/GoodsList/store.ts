@@ -6,8 +6,8 @@ import { defineStore } from 'pinia';
 import { IResponseData } from '@/@types/utils.request';
 import { GoodsParams } from './data';
 import { queryData } from './service';
-import { Pagination } from '@/@types/page'
-import { Goods } from '@/@types/goods'
+import { Pagination } from '@/@types/page';
+import { Goods } from '@/@types/goods';
 
 export interface IDetailState {
   loading: boolean;
@@ -28,7 +28,7 @@ export const useDataStore = defineStore('goodsList', {
       pageData: {
         currentPage: 1,
         pageSize: 20,
-        totalPage: 0
+        totalPage: 0,
       },
       goodsList: [],
     };
@@ -37,18 +37,25 @@ export const useDataStore = defineStore('goodsList', {
     async getData(params?: GoodsParams) {
       try {
         this.loading = true;
-        this.pageLoading = params?.currentPage === 1 || this.pageData.currentPage === 1;
-        params = { ...this.query, ...params || {}, onlyInStock: this.query.onlyInStock || null };
-        const response: IResponseData<{ records?: Goods[], page: Pagination }> = await queryData(params);
+        this.pageLoading =
+          params?.currentPage === 1 || this.pageData.currentPage === 1;
+        params = {
+          ...this.query,
+          ...(params || {}),
+          onlyInStock: this.query.onlyInStock || null,
+        };
+        const response: IResponseData<{ records?: Goods[]; page: Pagination }> =
+          await queryData(params);
         const data = response.data?.records || [];
         if (data) {
-          this.goodsList = params.currentPage > 1 ? [...this.goodsList, ...data] : data;
+          this.goodsList =
+            params.currentPage > 1 ? [...this.goodsList, ...data] : data;
         }
         this.loading = false;
         this.pageLoading = false;
         this.pageData = {
-            ...this.pageData,
-            totalPage: response.data?.page.totalPage || 0,
+          ...this.pageData,
+          totalPage: response.data?.page.totalPage || 0,
         };
       } catch (error: any) {
         // console.log('error useDataStore getData', error);

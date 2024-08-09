@@ -25,9 +25,11 @@ import { ReportMiddleware } from './middleware/report.middleware';
       enabledEnvironment: ['local'],
     },
   ],
-  importConfigs: [{
-    default: DefaultConfig
-  }],
+  importConfigs: [
+    {
+      default: DefaultConfig,
+    },
+  ],
 })
 export class MainConfiguration {
   @App('koa')
@@ -39,12 +41,18 @@ export class MainConfiguration {
       config => {
         // Do something before request is sent
         // console.log(config, 'config.data');
-        if ((config.method === 'post' || config.method === 'put') && config.headers['Content-Type'] === 'application/json') {
-            // post、put 提交时，将对象转换为string, 为处理Java后台解析问题
-            config.data = JSON.stringify(config.data)
+        if (
+          (config.method === 'post' || config.method === 'put') &&
+          config.headers['Content-Type'] === 'application/json'
+        ) {
+          // post、put 提交时，将对象转换为string, 为处理Java后台解析问题
+          config.data = JSON.stringify(config.data);
         }
         if (config.params?.Authorization || config.data?.Authorization) {
-            config.headers['Authorization'] = config.params?.Authorization || config.data?.Authorization || undefined;
+          config.headers['Authorization'] =
+            config.params?.Authorization ||
+            config.data?.Authorization ||
+            undefined;
         }
         return config;
       },
@@ -54,21 +62,21 @@ export class MainConfiguration {
       }
     );
     httpService.interceptors.response.use(
-        response => {
-          // Do something before response
-          return response;
-        },
-        error => {
-          // Do something with response error
-          return Promise.reject(error);
-        }
+      response => {
+        // Do something before response
+        return response;
+      },
+      error => {
+        // Do something with response error
+        return Promise.reject(error);
+      }
     );
     // 拓展context,集成baseApiUrl
     Object.defineProperties(this.app.context, {
-        baseApiUrl: {
-          value: apiConfig.default.baseUrl,
-        },
-      });
+      baseApiUrl: {
+        value: apiConfig.default.baseUrl,
+      },
+    });
     // add middleware
     this.app.useMiddleware([ReportMiddleware]);
     // add filter

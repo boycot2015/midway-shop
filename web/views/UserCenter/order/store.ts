@@ -56,7 +56,7 @@ tabs.value.filter(el => !!+el.value).map(el => {
     displayOrderStatusType.value[el.value] = el.type
 })
 
-export const useDataStore = defineStore('order', {
+export const useDataStore = defineStore('orderStore', {
   state(): IDataState {
     return {
       loading: false,

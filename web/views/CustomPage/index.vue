@@ -2,7 +2,7 @@
 import { defineComponent, computed } from 'vue'
 import { useAppStore } from "@/store/app";
 export default defineComponent({
-    name: 'CustomPage',
+  name: 'CustomPage',
   async asyncData({store, route, router, ctx}) {
     const query = route.query || {};
     const dataStore = useAppStore(store);

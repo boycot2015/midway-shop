@@ -17,16 +17,16 @@ export class WebsiteService {
   }
   async queryWebsiteTheme() {
     const url = this.ctx.baseApiUrl + this.prefix + '/queryWebsiteTheme';
-    const result = await this.httpService.get(url, { });
+    const result = await this.httpService.get(url, {});
     return { ...result.data };
   }
   async getWebsiteInfoData() {
     const url = this.ctx.baseApiUrl + this.prefix + '/queryWebsiteInfo';
-    const result = await this.httpService.get(url, { });
+    const result = await this.httpService.get(url, {});
     return { ...result.data };
   }
   async queryGoodsInfoBySkuList(params: any) {
-    const url = this.ctx.baseApiUrl + '/websitePc/queryGoodsInfoBySkuList';    
+    const url = this.ctx.baseApiUrl + '/websitePc/queryGoodsInfoBySkuList';
     const result = await this.httpService.post(url, params.goodsSkuCodeList);
     return { ...result.data };
   }
