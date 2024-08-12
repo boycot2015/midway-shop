@@ -22,11 +22,11 @@ export default defineComponent({
 })
 </script>
 <script lang="ts" setup>
-import NavBar from '../components/NavBar/index.vue';
-import Header from '../components/Header/index.vue';
-import Footer from '../components/Footer/index.vue';
-import NavColumn from '../components/NavColumn/index.vue';
-import Breadcrumb from '../components/Breadcrumb/index.vue';
+import NavBar from '@/layouts/components/NavBar/index.vue';
+import Header from '@/layouts/components/Header/index.vue';
+import Footer from '@/layouts/components/Footer/index.vue';
+import NavColumn from '@/layouts/components/NavColumn/index.vue';
+import Breadcrumb from '@/layouts/components/Breadcrumb/index.vue';
 const cartStore = useCartStore();
 const userStore = useUserStore();
 onMounted(async () => {
