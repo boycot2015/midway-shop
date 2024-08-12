@@ -4,8 +4,8 @@ import { createRouter } from '@/router';
 import store from './store';
 
 // vue-fontawesome
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { fas } from '@fortawesome/free-solid-svg-icons'
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { fas } from '@fortawesome/free-solid-svg-icons';
 
 // 样式初始化
 import 'normalize.css';
@@ -20,12 +20,12 @@ import ElementPlus from 'element-plus';
 export function createApp(routerType: RouterType) {
   const app = createSSRApp(App);
   const router = createRouter(routerType);
-//   app.use(pinia);
+  //   app.use(pinia);
   app.use(store);
   app.use(router);
   app.use(ElementPlus, {
     // locale: zhCn,
-  })
+  });
   library.add(fas);
   return { app, router, pinia: store };
 }

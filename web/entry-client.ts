@@ -19,11 +19,11 @@ router.beforeResolve((to, from, next) => {
   }
   const userStore = useUserStore();
   if (!userStore.token && to.path !== '/login') {
-      if (to.path !== '/login' && !to.meta.openVisit) {
-        return next('/login');
-      } else {
-        return next();
-      }
+    if (to.path !== '/login' && !to.meta.openVisit) {
+      return next('/login');
+    } else {
+      return next();
+    }
   }
   const matched = router.resolve(to).matched;
   const prevMatched = router.resolve(from).matched;
