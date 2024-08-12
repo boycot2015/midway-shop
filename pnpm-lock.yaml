@@ -24,7 +24,7 @@ importers:
         specifier: ^3.0.6
         version: 3.0.6(@fortawesome/fontawesome-svg-core@6.5.2)(vue@3.3.8(typescript@4.6.4))
       '@midwayjs/axios':
-        specifier: ^3.16.4
+        specifier: ^3.16.2
         version: 3.16.8
       '@midwayjs/bootstrap':
         specifier: ^3.16.2
@@ -33,22 +33,22 @@ importers:
         specifier: ^3.16.2
         version: 3.16.2
       '@midwayjs/info':
-        specifier: ^3.16.4
+        specifier: ^3.16.2
         version: 3.16.8
       '@midwayjs/koa':
-        specifier: ^3.16.4
+        specifier: ^3.16.2
         version: 3.16.8
       '@midwayjs/logger':
         specifier: ^3.4.2
         version: 3.4.2
       '@midwayjs/static-file':
-        specifier: ^3.16.4
+        specifier: ^3.16.2
         version: 3.16.8
       '@midwayjs/typeorm':
-        specifier: ^3.16.4
+        specifier: ^3.16.2
         version: 3.16.5
       '@midwayjs/validate':
-        specifier: ^3.16.4
+        specifier: ^3.16.2
         version: 3.16.8
       axios:
         specifier: ^1.6.2
@@ -5015,7 +5015,7 @@ snapshots:
 
   '@types/koa-compose@3.2.8':
     dependencies:
-      '@types/koa': 2.13.11
+      '@types/koa': 2.15.0
 
   '@types/koa@2.13.11':
     dependencies:
@@ -6418,7 +6418,7 @@ snapshots:
       dezalgo: 1.0.4
       hexoid: 1.0.0
       once: 1.4.0
-      qs: 6.11.2
+      qs: 6.13.0
 
   fragment-cache@0.2.1:
     dependencies:
@@ -8282,7 +8282,7 @@ snapshots:
       formidable: 2.1.2
       methods: 1.1.2
       mime: 2.6.0
-      qs: 6.11.2
+      qs: 6.13.0
       semver: 7.6.2
     transitivePeerDependencies:
       - supports-color
