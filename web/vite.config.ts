@@ -31,8 +31,8 @@ export default defineConfig((/* { mode, command } */) => {
 
   /* 公共配置 S */
   const config: UserConfigExport = {
-    root: 'web',
-    publicDir: './',
+    root: '/',
+    // publicDir: './',
     resolve: {
       alias: {
         '~': resolve(__dirname, '../'),
