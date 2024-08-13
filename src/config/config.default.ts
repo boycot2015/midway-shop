@@ -1,5 +1,8 @@
 import { MidwayConfig } from '@midwayjs/core';
 const domans = ['cs0188', 'DELL', 'dell', 'ptsc39'];
+const mallPath = domans[Math.floor(Math.random() * domans.length)];
+console.log(mallPath, 'mallPath');
+
 export default {
   // use for cookie sign key, should change to your own and keep security
   keys: '123456789',
@@ -42,8 +45,7 @@ export default {
         // `headers` are custom headers to be sent
         headers: {
           'X-Requested-With': 'XMLHttpRequest',
-          'Website-Path':
-            domans[Math.floor(Math.random() * (domans.length - 1))], // cs0188 DELL dell ptsc39
+          'Website-Path': mallPath, // cs0188 DELL dell ptsc39
         },
         timeout: 15000, // default is `0` (no timeout)
 

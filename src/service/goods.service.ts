@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Provide, Inject } from '@midwayjs/core';
 import { HttpService } from '@midwayjs/axios';
 import { Context } from '@midwayjs/koa';
@@ -8,7 +9,7 @@ export class GoodsService {
   ctx: Context;
   @Inject()
   httpService: HttpService;
-  prefix: string = '/goods';
+  prefix = '/goods';
   async getGoodsByPage(params?: any) {
     const url = this.ctx.baseApiUrl + this.prefix + '/getGoodsPage';
     const result = await this.httpService.get(url, { params });
