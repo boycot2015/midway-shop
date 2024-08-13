@@ -32,12 +32,13 @@ export default defineConfig((/* { mode, command } */) => {
   /* 公共配置 S */
   const config: UserConfigExport = {
     root: 'web',
+    publicDir: './',
     resolve: {
       alias: {
         '~': resolve(__dirname, '../'),
         '@': resolve(__dirname, './'),
       },
-      dedupe: ['pinia']
+      dedupe: ['pinia'],
     },
     server: {
       proxy: {
@@ -51,15 +52,15 @@ export default defineConfig((/* { mode, command } */) => {
     },
     plugins,
     css: {
-        preprocessorOptions: {
-            scss: {
-                additionalData: '@import "@/assets/css/global.scss";',
-                javascriptEnabled: true
-            }
-        }
+      preprocessorOptions: {
+        scss: {
+          additionalData: '@import "@/assets/css/global.scss";',
+          javascriptEnabled: true,
+        },
+      },
     },
     define: {
-        __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: true,
+      __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: true,
     },
     // build: {
     //     rollupOptions: {
