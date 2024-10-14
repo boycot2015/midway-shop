@@ -188,7 +188,7 @@ const errorHandler = (error: any) => {
     }
   }
 
-//   return Promise.reject(error);
+  //   return Promise.reject(error);
   return Promise.resolve(error);
 };
 
@@ -247,13 +247,18 @@ export class Request {
         const res = response.data;
         const { code, success } = res;
         if (code + '' === '11111' && !import.meta.env.SSR) {
-            window.location.href = userLoginUrl;
+          window.location.href = userLoginUrl;
         }
         // 自定义状态码验证
-        if (code !== ResultCodeEnum.SUCCESS&&code !== ResultCodeEnum.SUCCESS_CODE&&!success) {
+        if (
+          code !== ResultCodeEnum.SUCCESS &&
+          code !== ResultCodeEnum.SUCCESS_CODE &&
+          !success
+        ) {
           return Promise.reject({
             response,
-            message: response.data.message || response.data.msg || 'CustomeError',
+            message:
+              response.data.message || response.data.msg || 'CustomeError',
           });
         }
 

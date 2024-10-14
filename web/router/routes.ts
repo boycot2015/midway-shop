@@ -20,7 +20,7 @@ const DefaultLayoutRoutes: Array<RouteRecordRaw> = [
   },
   {
     path: '/home',
-    redirect: '/'
+    redirect: '/',
   },
   {
     path: '/customPage',
@@ -50,7 +50,7 @@ const DefaultLayoutRoutes: Array<RouteRecordRaw> = [
   },
   {
     path: '/goodsList',
-    redirect: '/goods/list'
+    redirect: '/goods/list',
   },
   {
     path: '/goods/list',
@@ -79,7 +79,9 @@ const DefaultLayoutRoutes: Array<RouteRecordRaw> = [
       navActive: 'about',
     },
     component: () =>
-      import(/* webpackChunkName: "GoodsDetail" */ '@/views/GoodsDetail/index.vue'),
+      import(
+        /* webpackChunkName: "GoodsDetail" */ '@/views/GoodsDetail/index.vue'
+      ),
   },
   {
     path: '/localapi',
@@ -96,14 +98,14 @@ const DefaultLayoutRoutes: Array<RouteRecordRaw> = [
   SubmitOrder,
   {
     path: '/userCenter',
-    redirect: '/user/index'
+    redirect: '/user/index',
   },
   {
     path: '/cart',
     name: 'cart',
     meta: {
       title: '购物车',
-    //   hideBreadcrumb: true,
+      //   hideBreadcrumb: true,
       keywords: '购物车k',
       description: '购物车d',
       navActive: 'cart',

@@ -8,7 +8,7 @@ import { siteTokenKey } from '@/config/settings';
  * 获取本地Token
  */
 export const getToken = () => {
-//   let domain = window.location.pathname.split('/')[1];
+  //   let domain = window.location.pathname.split('/')[1];
   return !import.meta.env.SSR ? localStorage.getItem(siteTokenKey) : '';
 };
 
@@ -16,7 +16,7 @@ export const getToken = () => {
  * 设置存储本地Token
  */
 export const setToken = (token: string) => {
-//   let domain = window.location.pathname.split('/')[1];
+  //   let domain = window.location.pathname.split('/')[1];
   !import.meta.env.SSR && localStorage.setItem(siteTokenKey, token);
 };
 
