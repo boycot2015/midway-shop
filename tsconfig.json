@@ -18,6 +18,7 @@
     "esModuleInterop": true,
     "typeRoots": [ "./typings", "./node_modules/@types"],
     "outDir": "dist",
+    "baseUrl": "./",
     "paths": {
       "~/*": ["./*"],
       "@/*": ["./web/*"],

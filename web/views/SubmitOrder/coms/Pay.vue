@@ -34,7 +34,7 @@ const payWay = {
     3: '现金',
 }
 const router = useRouter();
-const store = useDataStore();
+const store:any = useDataStore();
 const payCash = computed(() => store.payCash);
 const onSubmit = () => {
     store.submitOrder().then(res => {

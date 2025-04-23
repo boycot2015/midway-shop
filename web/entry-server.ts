@@ -14,7 +14,15 @@ export async function render(
   const { app, router, pinia } = createApp('memory');
 
   const to: RouteLocationRaw = ctx.originalUrl;
-
+  const renderCtx: { modules?: string[] } = {};
+  let readableHtml: string | Readable;
+  let preloadLinks = '';
+  if (isStream) {
+    readableHtml = renderToNodeStream(app);
+  } else {
+    readableHtml = await renderToString(app, renderCtx);
+    preloadLinks = renderPreloadLinks(renderCtx.modules, manifest);
+  }
   await router.push(to);
   await router.isReady();
 
@@ -72,16 +80,6 @@ export async function render(
     meta.title = seo.title ? `${seo.title}-${siteTitle}` : meta.title;
     meta.keywords = seo.keywords || meta.keywords;
     meta.description = seo.description || meta.description;
-  }
-
-  const renderCtx: { modules?: string[] } = {};
-  let readableHtml: string | Readable;
-  let preloadLinks = '';
-  if (isStream) {
-    readableHtml = renderToNodeStream(app);
-  } else {
-    readableHtml = await renderToString(app, renderCtx);
-    preloadLinks = renderPreloadLinks(renderCtx.modules, manifest);
   }
 
   const state = JSON.stringify(pinia.state.value);
