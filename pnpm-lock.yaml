@@ -138,6 +138,9 @@ importers:
       sass:
         specifier: ^1.69.5
         version: 1.69.5
+      tailwindcss:
+        specifier: ^4.1.4
+        version: 4.1.4
       ts-jest:
         specifier: ^26.5.6
         version: 26.5.6(jest@26.6.3(ts-node@10.9.2(@types/node@14.0.0)(typescript@4.6.4)))(typescript@4.6.4)
@@ -3656,6 +3659,9 @@ packages:
   table@6.8.2:
     resolution: {integrity: sha512-w2sfv80nrAh2VCbqR5AK27wswXhqcck2AhfnNW76beQXskGZ1V12GwS//yYVa3d3fcvAip2OUnbDAjW2k3v9fA==}
     engines: {node: '>=10.0.0'}
+
+  tailwindcss@4.1.4:
+    resolution: {integrity: sha512-1ZIUqtPITFbv/DxRmDr5/agPqJwF69d24m9qmM1939TJehgY539CtzeZRjbLt5G6fSy/7YqqYsfvoTEw9xUI2A==}
 
   terminal-link@2.1.1:
     resolution: {integrity: sha512-un0FmiRUQNr5PJqy9kP7c40F5BOfpGlYTrxonDChEZB7pzZxRNp/bt+ymiy9/npwXya9KH99nJ/GXFIiUkYGFQ==}
@@ -8322,6 +8328,8 @@ snapshots:
       slice-ansi: 4.0.0
       string-width: 4.2.3
       strip-ansi: 6.0.1
+
+  tailwindcss@4.1.4: {}
 
   terminal-link@2.1.1:
     dependencies:

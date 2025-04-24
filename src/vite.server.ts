@@ -46,11 +46,11 @@ export function renderCommon(
 ) {
   const { readableHtml, preloadLinks, meta, state } = renderResponse;
   const html = template
+    .replace('<!--preload-links-->', preloadLinks)
     .replace('"<!--app--vue-state-->"', state)
     .replace('<!--app-title-->', meta.title)
     .replace('!--app-keywords--', meta.keywords)
-    .replace('!--app-description--', meta.description)
-    .replace('<!--preload-links-->', preloadLinks);
+    .replace('!--app-description--', meta.description);
   // 不启用 stream
   if (!isStream) {
     return html.replace('<!--app-html-->', readableHtml as string);
